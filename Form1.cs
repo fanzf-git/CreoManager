@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.IO;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 
 namespace BIMManager
@@ -15,7 +17,7 @@ namespace BIMManager
 
     public partial class MainForm : Form
     {
-        private string creoPath = @"C:\\Program Files\\PTC\\Creo 10.0\\Parametric\\bin\\creo.exe";
+        private string creoPath;
         private IntPtr wrapperPtr = IntPtr.Zero;
 
         [DllImport("CreoWrapper.dll")]
@@ -40,6 +42,133 @@ namespace BIMManager
         {
             InitializeComponent();
             wrapperPtr = Wrapper_New();
+            creoPath = GetCreoParametricPath();
+        }
+
+        /// <summary>
+        /// 从注册表读取 Creo Parametric 的安装路径
+        /// </summary>
+        /// <returns>parametric.exe 的完整路径，如果未找到则返回 null</returns>
+        private string GetCreoParametricPath()
+        {
+            // 尝试从注册表读取安装路径
+            string[] registryPaths = new[]
+            {
+                @"SOFTWARE\PTC\Creo Parametric",
+                @"SOFTWARE\PTC\Creo",
+                @"SOFTWARE\WOW6432Node\PTC\Creo Parametric",
+                @"SOFTWARE\WOW6432Node\PTC\Creo"
+            };
+
+            // 首先尝试从 PTC 注册表键读取
+            foreach (var baseKey in registryPaths)
+            {
+                try
+                {
+                    using (var key = Registry.LocalMachine.OpenSubKey(baseKey))
+                    {
+                        if (key != null)
+                        {
+                            // 尝试读取 InstallPath 或 InstallLocation
+                            var installPath = key.GetValue("InstallPath") as string ??
+                                            key.GetValue("InstallLocation") as string ??
+                                            key.GetValue("Path") as string;
+
+                            if (!string.IsNullOrEmpty(installPath) && Directory.Exists(installPath))
+                            {
+                                // 构造 parametric.exe 路径
+                                var exePath = Path.Combine(installPath, "Parametric", "bin", "parametric.exe");
+                                if (File.Exists(exePath))
+                                {
+                                    return exePath;
+                                }
+
+                                // 如果 installPath 已经是 Parametric 目录
+                                exePath = Path.Combine(installPath, "bin", "parametric.exe");
+                                if (File.Exists(exePath))
+                                {
+                                    return exePath;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 忽略注册表读取错误，继续尝试其他路径
+                    System.Diagnostics.Debug.WriteLine($"读取注册表键 {baseKey} 失败: {ex.Message}");
+                }
+            }
+
+            // 如果注册表中未找到，尝试从卸载信息中查找
+            try
+            {
+                using (var uninstallKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+                {
+                    if (uninstallKey != null)
+                    {
+                        foreach (var subKeyName in uninstallKey.GetSubKeyNames())
+                        {
+                            using (var subKey = uninstallKey.OpenSubKey(subKeyName))
+                            {
+                                if (subKey != null)
+                                {
+                                    var displayName = subKey.GetValue("DisplayName") as string;
+                                    if (displayName != null && displayName.Contains("Creo") && displayName.Contains("Parametric"))
+                                    {
+                                        var installLocation = subKey.GetValue("InstallLocation") as string;
+                                        if (!string.IsNullOrEmpty(installLocation) && Directory.Exists(installLocation))
+                                        {
+                                            var exePath = Path.Combine(installLocation, "Parametric", "bin", "parametric.exe");
+                                            if (File.Exists(exePath))
+                                            {
+                                                return exePath;
+                                            }
+
+                                            exePath = Path.Combine(installLocation, "bin", "parametric.exe");
+                                            if (File.Exists(exePath))
+                                            {
+                                                return exePath;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"从卸载信息读取失败: {ex.Message}");
+            }
+
+            // 如果注册表中都未找到，尝试常见的默认安装路径
+            string[] defaultPaths = new[]
+            {
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "PTC"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "PTC")
+            };
+
+            foreach (var ptcBase in defaultPaths)
+            {
+                if (Directory.Exists(ptcBase))
+                {
+                    // 查找所有 Creo 版本目录
+                    var creoDirs = Directory.GetDirectories(ptcBase, "Creo*");
+                    foreach (var creoDir in creoDirs)
+                    {
+                        var exePath = Path.Combine(creoDir, "Parametric", "bin", "parametric.exe");
+                        if (File.Exists(exePath))
+                        {
+                            return exePath;
+                        }
+                    }
+                }
+            }
+
+            // 如果都未找到，返回 null
+            return null;
         }
 
         private void TestAddPart()
@@ -74,9 +203,19 @@ namespace BIMManager
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(creoPath))
+            {
+                MessageBox.Show("未找到 Creo Parametric 安装路径！\n请检查 Creo 是否已正确安装。", 
+                    "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             bool ret = InitCreo(wrapperPtr, creoPath);
             if (!ret)
-                MessageBox.Show("Creo 启动失败！");
+            {
+                MessageBox.Show($"Creo 启动失败！\n路径: {creoPath}", 
+                    "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

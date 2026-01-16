@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -84,17 +84,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-      <!-- 复制 CreoWrapper.dll 到输出目录 -->
-      <!-- C++ 项目输出到 x64\$(Configuration)\ 目录 -->
-      if exist "$(SolutionDir)x64\$(ConfigurationName)\CreoWrapper.dll" (
-        copy /Y "$(SolutionDir)x64\$(ConfigurationName)\CreoWrapper.dll" "$(TargetDir)CreoWrapper.dll"
-        echo CreoWrapper.dll copied to $(TargetDir)
-      ) else (
-        echo Warning: CreoWrapper.dll not found at $(SolutionDir)x64\$(ConfigurationName)\CreoWrapper.dll
-      )
-    </PostBuildEvent>
-  </PropertyGroup>
+  <!-- PostBuildEvent 已移除，因为 CreoWrapper 现在直接输出到 C# 项目的输出目录 -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
