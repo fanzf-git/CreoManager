@@ -9,7 +9,16 @@ CreoWrapper::CreoWrapper() : m_creoStartedByWrapper(false)
 
 CreoWrapper::~CreoWrapper()
 {
-    CloseCreo();
+	// 析构函数中安全地关闭 Creo
+	// CloseCreo 内部已经处理了重复调用的情况
+	try
+	{
+		CloseCreo();
+	}
+	catch (...)
+	{
+		// 忽略析构函数中的异常，避免程序崩溃
+	}
 }
 
 
@@ -41,9 +50,40 @@ void CreoWrapper::CloseCreo()
 {
 	if (m_creoStartedByWrapper)
 	{
-		TerminateProcess(m_creoProcessInfo.hProcess, 0);
-		CloseHandle(m_creoProcessInfo.hProcess);
-		CloseHandle(m_creoProcessInfo.hThread);
+		m_creoStartedByWrapper = false; // 先设置标志，避免重复调用
+		
+		// 检查进程句柄是否有效
+		if (m_creoProcessInfo.hProcess != NULL && m_creoProcessInfo.hProcess != INVALID_HANDLE_VALUE)
+		{
+			// 检查进程是否还在运行
+			DWORD exitCode;
+			if (GetExitCodeProcess(m_creoProcessInfo.hProcess, &exitCode))
+			{
+				// 如果进程仍在运行 (STILL_ACTIVE = 259)，则终止它
+				if (exitCode == STILL_ACTIVE)
+				{
+					TerminateProcess(m_creoProcessInfo.hProcess, 0);
+				}
+			}
+			
+			// 关闭句柄（即使进程已退出也要关闭）
+			if (CloseHandle(m_creoProcessInfo.hProcess))
+			{
+				m_creoProcessInfo.hProcess = NULL;
+			}
+		}
+		
+		// 关闭线程句柄
+		if (m_creoProcessInfo.hThread != NULL && m_creoProcessInfo.hThread != INVALID_HANDLE_VALUE)
+		{
+			if (CloseHandle(m_creoProcessInfo.hThread))
+			{
+				m_creoProcessInfo.hThread = NULL;
+			}
+		}
+		
+		// 清零整个结构
+		ZeroMemory(&m_creoProcessInfo, sizeof(m_creoProcessInfo));
 	}
 }
 

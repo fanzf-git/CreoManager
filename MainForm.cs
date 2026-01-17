@@ -171,41 +171,49 @@ namespace BIMManager
             return null;
         }
 
-        private void TestAddPart()
+        /// <summary>
+        /// 结构体传参
+        /// </summary>
+        private void TestAddPartByParams()
         {
-            // TODO: 从实际的UI控件获取值，这里使用示例值
             var p = new PartParams
             {
-                Length = 100.0,
-                Width = 50.0,
-                Height = 30.0,
-                DraftAngle = 5.0,
-                FilletRadius = 2.0
+                Length = double.Parse(textLength.Text),
+                Width = double.Parse(textWidth.Text),
+                Height = double.Parse(textHeight.Text),
+                DraftAngle = double.Parse(textDraftAngle.Text),
+                FilletRadius = double.Parse(textFilletRadius.Text)
             };
 
-            // 方法1: 直接使用结构体
-            bool partResult = CreatePart(wrapperPtr, ref p);
+            var partResult = CreatePart(wrapperPtr, ref p);
 
-            // 方法2: 使用JSON
+            MessageBox.Show(partResult ? "模型生成成功" : "生成失败");
+        }
+
+        /// <summary>
+        /// json传参
+        /// </summary>
+        private void TestAddPartByJson()
+        {
             var partData = new CreoData
             {
-                Length = p.Length,
-                Width = p.Width,
-                Height = p.Height,
-                DraftAngle = p.DraftAngle,
-                FilletRadius = p.FilletRadius
+                Length = double.Parse(textLength.Text),
+                Width = double.Parse(textWidth.Text),
+                Height = double.Parse(textHeight.Text),
+                DraftAngle = double.Parse(textDraftAngle.Text),
+                FilletRadius = double.Parse(textFilletRadius.Text)
             };
-            string json = JsonConvert.SerializeObject(partData);
-            bool jsonResult = CreatePartFromJson(wrapperPtr, json);
+            var json = JsonConvert.SerializeObject(partData);
+            var jsonResult = CreatePartFromJson(wrapperPtr, json);
 
-            MessageBox.Show(partResult && jsonResult ? "模型生成成功" : "生成失败");
+            MessageBox.Show(jsonResult ? "模型生成成功" : "生成失败");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(creoPath))
             {
-                MessageBox.Show("未找到 Creo Parametric 安装路径！\n请检查 Creo 是否已正确安装。", 
+                MessageBox.Show("未找到 Creo Parametric 安装路径！\n请检查 Creo 是否已正确安装。",
                     "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -213,19 +221,62 @@ namespace BIMManager
             bool ret = InitCreo(wrapperPtr, creoPath);
             if (!ret)
             {
-                MessageBox.Show($"Creo 启动失败！\n路径: {creoPath}", 
+                MessageBox.Show($"Creo 启动失败！\n路径: {creoPath}",
                     "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CloseCreo(wrapperPtr);
-            if (wrapperPtr != IntPtr.Zero)
+            try
             {
-                Wrapper_Delete(wrapperPtr);
-                wrapperPtr = IntPtr.Zero;
+                // 先关闭 Creo（如果正在运行）
+                if (wrapperPtr != IntPtr.Zero)
+                {
+                    try
+                    {
+                        CloseCreo(wrapperPtr);
+                    }
+                    catch (Exception ex)
+                    {
+                        // 记录错误但不阻止关闭
+                        System.Diagnostics.Debug.WriteLine($"关闭 Creo 时出错: {ex.Message}");
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"FormClosing 错误: {ex.Message}");
+            }
+            finally
+            {
+                // 确保释放 wrapper 对象
+                if (wrapperPtr != IntPtr.Zero)
+                {
+                    try
+                    {
+                        Wrapper_Delete(wrapperPtr);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"删除 Wrapper 时出错: {ex.Message}");
+                    }
+                    finally
+                    {
+                        wrapperPtr = IntPtr.Zero;
+                    }
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TestAddPartByParams();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            TestAddPartByJson();
         }
     }
 }
