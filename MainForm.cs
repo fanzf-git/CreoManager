@@ -11,12 +11,14 @@ using System.Runtime.InteropServices;
 using System.IO;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using OdaCliWrapper;
 
 namespace BIMManager
 {
 
     public partial class MainForm : Form
     {
+        private OdaCliWrapper _viewer = new OdaViewer();
         private string creoPath;
         private IntPtr wrapperPtr = IntPtr.Zero;
 
@@ -42,7 +44,7 @@ namespace BIMManager
         {
             InitializeComponent();
             wrapperPtr = Wrapper_New();
-            creoPath = GetCreoParametricPath();
+            //creoPath = GetCreoParametricPath();
         }
 
         /// <summary>
@@ -203,70 +205,71 @@ namespace BIMManager
                 DraftAngle = double.Parse(textDraftAngle.Text),
                 FilletRadius = double.Parse(textFilletRadius.Text)
             };
-            var json = JsonConvert.SerializeObject(partData);
-            var jsonResult = CreatePartFromJson(wrapperPtr, json);
+
+            _viewer.DrawBox(p);
 
             MessageBox.Show(jsonResult ? "模型生成成功" : "生成失败");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(creoPath))
-            {
-                MessageBox.Show("未找到 Creo Parametric 安装路径！\n请检查 Creo 是否已正确安装。",
-                    "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            _viewer.Init(viewPanel.Handle);
+            //if (string.IsNullOrEmpty(creoPath))
+            //{
+            //    MessageBox.Show("未找到 Creo Parametric 安装路径！\n请检查 Creo 是否已正确安装。",
+            //        "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
 
-            bool ret = InitCreo(wrapperPtr, creoPath);
-            if (!ret)
-            {
-                MessageBox.Show($"Creo 启动失败！\n路径: {creoPath}",
-                    "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //bool ret = InitCreo(wrapperPtr, creoPath);
+            //if (!ret)
+            //{
+            //    MessageBox.Show($"Creo 启动失败！\n路径: {creoPath}",
+            //        "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
-            {
-                // 先关闭 Creo（如果正在运行）
-                if (wrapperPtr != IntPtr.Zero)
-                {
-                    try
-                    {
-                        CloseCreo(wrapperPtr);
-                    }
-                    catch (Exception ex)
-                    {
-                        // 记录错误但不阻止关闭
-                        System.Diagnostics.Debug.WriteLine($"关闭 Creo 时出错: {ex.Message}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"FormClosing 错误: {ex.Message}");
-            }
-            finally
-            {
-                // 确保释放 wrapper 对象
-                if (wrapperPtr != IntPtr.Zero)
-                {
-                    try
-                    {
-                        Wrapper_Delete(wrapperPtr);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"删除 Wrapper 时出错: {ex.Message}");
-                    }
-                    finally
-                    {
-                        wrapperPtr = IntPtr.Zero;
-                    }
-                }
-            }
+            //try
+            //{
+            //    // 先关闭 Creo（如果正在运行）
+            //    if (wrapperPtr != IntPtr.Zero)
+            //    {
+            //        try
+            //        {
+            //            CloseCreo(wrapperPtr);
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            // 记录错误但不阻止关闭
+            //            System.Diagnostics.Debug.WriteLine($"关闭 Creo 时出错: {ex.Message}");
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Diagnostics.Debug.WriteLine($"FormClosing 错误: {ex.Message}");
+            //}
+            //finally
+            //{
+            //    // 确保释放 wrapper 对象
+            //    if (wrapperPtr != IntPtr.Zero)
+            //    {
+            //        try
+            //        {
+            //            Wrapper_Delete(wrapperPtr);
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            System.Diagnostics.Debug.WriteLine($"删除 Wrapper 时出错: {ex.Message}");
+            //        }
+            //        finally
+            //        {
+            //            wrapperPtr = IntPtr.Zero;
+            //        }
+            //    }
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
