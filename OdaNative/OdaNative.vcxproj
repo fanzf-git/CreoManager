@@ -59,15 +59,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ThirdParty.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ThirdParty.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ThirdParty.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ThirdParty.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -78,12 +82,14 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>D:\ODATrial\ODAToolkit\Drawing\Include;D:\ODATrial\lib\native\KernelBase\Include;D:\ODATrial\ODAToolkit\KernelBase\Include;D:\ODATrial\lib\native\Kernel\Include;D:\ODATrial\lib\native\Kernel\Include\Ge;D:\ODATrial\lib\native\Kernel\Include\Oda;D:\ODATrial\lib\native\Kernel\Include\OdaDb;D:\ODATrial\lib\native\Kernel\Include\OdaGe;D:\ODATrial\lib;D:\ODATrial\lib\include;D:\ODATrial\lib\Oda;D:\ODATrial\lib\OdaDb;D:\ODATrial\lib\OdaGe;D:\ODATrial\lib\native;D:\ODATrial\lib\native\include;D:\ODATrial\lib\native\Oda;D:\ODATrial\lib\native\OdaDb;D:\ODATrial\lib\native\OdaGe;D:\ODATrial\include;D:\ODATrial\include\Oda;D:\ODATrial\include\OdaDb;D:\ODATrial\include\OdaGe;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ODA_SDK_DIR)\Kernel\Include;$(ODA_SDK_DIR)\Kernel\Include\Ge;$(ODA_SDK_DIR)\Drawing\Include;$(ODA_SDK_DIR)\KernelBase\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(ODA_SDK_DIR)\lib\vc17_amd64dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>TD_Root.lib;TD_Alloc.lib;TD_Key.lib;TD_Db.lib;TD_DbCore.lib;TD_DbEntities.lib;TD_DbIO.lib;TD_Ge.lib;TD_Tf.lib;TD_TfCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -96,7 +102,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>D:\ODATrial\ODAToolkit\Drawing\Include;D:\ODATrial\lib\native\KernelBase\Include;D:\ODATrial\ODAToolkit\KernelBase\Include;D:\ODATrial\lib\native\Kernel\Include;D:\ODATrial\lib\native\Kernel\Include\Ge;D:\ODATrial\lib\native\Kernel\Include\Oda;D:\ODATrial\lib\native\Kernel\Include\OdaDb;D:\ODATrial\lib\native\Kernel\Include\OdaGe;D:\ODATrial\lib;D:\ODATrial\lib\include;D:\ODATrial\lib\Oda;D:\ODATrial\lib\OdaDb;D:\ODATrial\lib\OdaGe;D:\ODATrial\lib\native;D:\ODATrial\lib\native\include;D:\ODATrial\lib\native\Oda;D:\ODATrial\lib\native\OdaDb;D:\ODATrial\lib\native\OdaGe;D:\ODATrial\include;D:\ODATrial\include\Oda;D:\ODATrial\include\OdaDb;D:\ODATrial\include\OdaGe;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ODA_SDK_DIR)\Kernel\Include;$(ODA_SDK_DIR)\Kernel\Include\Ge;$(ODA_SDK_DIR)\Drawing\Include;$(ODA_SDK_DIR)\KernelBase\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,6 +110,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(ODA_SDK_DIR)\lib\vc17_amd64dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>TD_Root.lib;TD_Alloc.lib;TD_Key.lib;TD_Db.lib;TD_DbCore.lib;TD_DbEntities.lib;TD_DbIO.lib;TD_Ge.lib;TD_Tf.lib;TD_TfCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,12 +122,14 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>D:\ODATrial\ODAToolkit\Drawing\Include;D:\ODATrial\lib\native\KernelBase\Include;D:\ODATrial\ODAToolkit\KernelBase\Include;D:\ODATrial\lib\native\Kernel\Include;D:\ODATrial\lib\native\Kernel\Include\Ge;D:\ODATrial\lib\native\Kernel\Include\Oda;D:\ODATrial\lib\native\Kernel\Include\OdaDb;D:\ODATrial\lib\native\Kernel\Include\OdaGe;D:\ODATrial\lib;D:\ODATrial\lib\include;D:\ODATrial\lib\Oda;D:\ODATrial\lib\OdaDb;D:\ODATrial\lib\OdaGe;D:\ODATrial\lib\native;D:\ODATrial\lib\native\include;D:\ODATrial\lib\native\Oda;D:\ODATrial\lib\native\OdaDb;D:\ODATrial\lib\native\OdaGe;D:\ODATrial\include;D:\ODATrial\include\Oda;D:\ODATrial\include\OdaDb;D:\ODATrial\include\OdaGe;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ODA_SDK_DIR)\Kernel\Include;$(ODA_SDK_DIR)\Kernel\Include\Ge;$(ODA_SDK_DIR)\Drawing\Include;$(ODA_SDK_DIR)\KernelBase\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(ODA_SDK_DIR)\lib\vc17_amd64dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>TD_Root.lib;TD_Alloc.lib;TD_Key.lib;TD_Db.lib;TD_DbCore.lib;TD_DbEntities.lib;TD_DbIO.lib;TD_Ge.lib;TD_Tf.lib;TD_TfCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,7 +142,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>D:\ODATrial\lib\native\KernelBase\Include;D:\ODATrial\lib\native\Kernel\Include;D:\ODATrial\lib\native\Kernel\Include\Ge;D:\ODATrial\lib\native\Kernel\Include\Oda;D:\ODATrial\lib\native\Kernel\Include\OdaDb;D:\ODATrial\lib\native\Kernel\Include\OdaGe;D:\ODATrial\lib;D:\ODATrial\lib\include;D:\ODATrial\lib\Oda;D:\ODATrial\lib\OdaDb;D:\ODATrial\lib\OdaGe;D:\ODATrial\lib\native;D:\ODATrial\lib\native\include;D:\ODATrial\lib\native\Oda;D:\ODATrial\lib\native\OdaDb;D:\ODATrial\lib\native\OdaGe;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ODA_SDK_DIR)\Kernel\Include;$(ODA_SDK_DIR)\Kernel\Include\Ge;$(ODA_SDK_DIR)\Drawing\Include;$(ODA_SDK_DIR)\KernelBase\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,16 +150,20 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(ODA_SDK_DIR)\lib\vc17_amd64dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>TD_Root.lib;TD_Alloc.lib;TD_Key.lib;TD_Db.lib;TD_DbCore.lib;TD_DbEntities.lib;TD_DbIO.lib;TD_Ge.lib;TD_Tf.lib;TD_TfCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="OdaEngine.h" />
+    <ClInclude Include="OdaInitilize.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="OdaEngine.cpp" />
+    <ClCompile Include="OdaInitilize.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

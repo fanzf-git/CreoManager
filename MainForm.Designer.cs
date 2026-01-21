@@ -29,232 +29,240 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.textFilletRadius = new DevExpress.XtraEditors.TextEdit();
-            this.textDraftAngle = new DevExpress.XtraEditors.TextEdit();
-            this.textHeight = new DevExpress.XtraEditors.TextEdit();
-            this.textWidth = new DevExpress.XtraEditors.TextEdit();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.labelLength = new System.Windows.Forms.Label();
+            this.labelWidth = new System.Windows.Forms.Label();
+            this.labelHeight = new System.Windows.Forms.Label();
             this.textLength = new DevExpress.XtraEditors.TextEdit();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.textWidth = new DevExpress.XtraEditors.TextEdit();
+            this.textHeight = new DevExpress.XtraEditors.TextEdit();
+            this.btnCreateBox = new System.Windows.Forms.Button();
+            this.labelSeparator = new System.Windows.Forms.Label();
+            this.labelCylinderRadius = new System.Windows.Forms.Label();
+            this.labelCylinderHeight = new System.Windows.Forms.Label();
+            this.textCylinderRadius = new DevExpress.XtraEditors.TextEdit();
+            this.textCylinderHeight = new DevExpress.XtraEditors.TextEdit();
+            this.btnCreateCylinder = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.viewPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textFilletRadius.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textDraftAngle.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textHeight.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textWidth.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textLength.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textWidth.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textHeight.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textCylinderRadius.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textCylinderHeight.Properties)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.textFilletRadius, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.textDraftAngle, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.textHeight, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.textWidth, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel1.Controls.Add(this.labelLength, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.labelWidth, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.labelHeight, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.textLength, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textWidth, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.textHeight, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.btnCreateBox, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.labelSeparator, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.labelCylinderRadius, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.labelCylinderHeight, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.textCylinderRadius, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.textCylinderHeight, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.btnCreateCylinder, 0, 7);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 35);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(3);
-            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel1.RowCount = 9;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 675);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 708);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // textFilletRadius
+            // labelLength
             // 
-            this.textFilletRadius.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textFilletRadius.EditValue = "50";
-            this.textFilletRadius.Location = new System.Drawing.Point(150, 126);
-            this.textFilletRadius.Name = "textFilletRadius";
-            this.textFilletRadius.Size = new System.Drawing.Size(138, 20);
-            this.textFilletRadius.TabIndex = 11;
+            this.labelLength.AutoSize = true;
+            this.labelLength.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelLength.Location = new System.Drawing.Point(8, 8);
+            this.labelLength.Margin = new System.Windows.Forms.Padding(3);
+            this.labelLength.Name = "labelLength";
+            this.labelLength.Padding = new System.Windows.Forms.Padding(3);
+            this.labelLength.Size = new System.Drawing.Size(107, 24);
+            this.labelLength.TabIndex = 0;
+            this.labelLength.Text = "长度";
+            this.labelLength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textDraftAngle
+            // labelWidth
             // 
-            this.textDraftAngle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textDraftAngle.EditValue = "30";
-            this.textDraftAngle.Location = new System.Drawing.Point(150, 96);
-            this.textDraftAngle.Name = "textDraftAngle";
-            this.textDraftAngle.Size = new System.Drawing.Size(138, 20);
-            this.textDraftAngle.TabIndex = 10;
+            this.labelWidth.AutoSize = true;
+            this.labelWidth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelWidth.Location = new System.Drawing.Point(8, 38);
+            this.labelWidth.Margin = new System.Windows.Forms.Padding(3);
+            this.labelWidth.Name = "labelWidth";
+            this.labelWidth.Padding = new System.Windows.Forms.Padding(3);
+            this.labelWidth.Size = new System.Drawing.Size(107, 24);
+            this.labelWidth.TabIndex = 1;
+            this.labelWidth.Text = "宽度";
+            this.labelWidth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textHeight
+            // labelHeight
             // 
-            this.textHeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textHeight.EditValue = "30";
-            this.textHeight.Location = new System.Drawing.Point(150, 66);
-            this.textHeight.Name = "textHeight";
-            this.textHeight.Size = new System.Drawing.Size(138, 20);
-            this.textHeight.TabIndex = 9;
-            // 
-            // textWidth
-            // 
-            this.textWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textWidth.EditValue = "25";
-            this.textWidth.Location = new System.Drawing.Point(150, 36);
-            this.textWidth.Name = "textWidth";
-            this.textWidth.Size = new System.Drawing.Size(138, 20);
-            this.textWidth.TabIndex = 8;
-            this.textWidth.Tag = "";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(6, 6);
-            this.label1.Margin = new System.Windows.Forms.Padding(3);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(3);
-            this.label1.Size = new System.Drawing.Size(138, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "长度";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(6, 36);
-            this.label2.Margin = new System.Windows.Forms.Padding(3);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(3);
-            this.label2.Size = new System.Drawing.Size(138, 24);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "宽度";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(6, 66);
-            this.label3.Margin = new System.Windows.Forms.Padding(3);
-            this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(3);
-            this.label3.Size = new System.Drawing.Size(138, 24);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "高度";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(6, 96);
-            this.label4.Margin = new System.Windows.Forms.Padding(3);
-            this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(3);
-            this.label4.Size = new System.Drawing.Size(138, 24);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "角度";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(6, 126);
-            this.label5.Margin = new System.Windows.Forms.Padding(3);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(3);
-            this.label5.Size = new System.Drawing.Size(138, 24);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "半径";
+            this.labelHeight.AutoSize = true;
+            this.labelHeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelHeight.Location = new System.Drawing.Point(8, 68);
+            this.labelHeight.Margin = new System.Windows.Forms.Padding(3);
+            this.labelHeight.Name = "labelHeight";
+            this.labelHeight.Padding = new System.Windows.Forms.Padding(3);
+            this.labelHeight.Size = new System.Drawing.Size(107, 24);
+            this.labelHeight.TabIndex = 2;
+            this.labelHeight.Text = "高度";
+            this.labelHeight.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textLength
             // 
             this.textLength.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textLength.EditValue = "100";
-            this.textLength.Location = new System.Drawing.Point(150, 6);
+            this.textLength.Location = new System.Drawing.Point(121, 8);
             this.textLength.Name = "textLength";
-            this.textLength.Size = new System.Drawing.Size(138, 20);
-            this.textLength.TabIndex = 7;
+            this.textLength.Size = new System.Drawing.Size(165, 20);
+            this.textLength.TabIndex = 3;
             // 
-            // button1
+            // textWidth
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(2, 2);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(146, 26);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "测试参数";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.textWidth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textWidth.EditValue = "25";
+            this.textWidth.Location = new System.Drawing.Point(121, 38);
+            this.textWidth.Name = "textWidth";
+            this.textWidth.Size = new System.Drawing.Size(165, 20);
+            this.textWidth.TabIndex = 4;
             // 
-            // button2
+            // textHeight
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(152, 2);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(146, 26);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "测试json";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.textHeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textHeight.EditValue = "30";
+            this.textHeight.Location = new System.Drawing.Point(121, 68);
+            this.textHeight.Name = "textHeight";
+            this.textHeight.Size = new System.Drawing.Size(165, 20);
+            this.textHeight.TabIndex = 5;
+            // 
+            // btnCreateBox
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.btnCreateBox, 2);
+            this.btnCreateBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCreateBox.Location = new System.Drawing.Point(8, 98);
+            this.btnCreateBox.Name = "btnCreateBox";
+            this.btnCreateBox.Size = new System.Drawing.Size(278, 29);
+            this.btnCreateBox.TabIndex = 6;
+            this.btnCreateBox.Text = "创建盒子";
+            this.btnCreateBox.UseVisualStyleBackColor = true;
+            this.btnCreateBox.Click += new System.EventHandler(this.btnCreateBox_Click);
+            // 
+            // labelSeparator
+            // 
+            this.labelSeparator.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.labelSeparator, 2);
+            this.labelSeparator.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelSeparator.Location = new System.Drawing.Point(8, 133);
+            this.labelSeparator.Margin = new System.Windows.Forms.Padding(3);
+            this.labelSeparator.Name = "labelSeparator";
+            this.labelSeparator.Size = new System.Drawing.Size(278, 14);
+            this.labelSeparator.TabIndex = 7;
+            this.labelSeparator.Text = "─────────────────────────";
+            this.labelSeparator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelCylinderRadius
+            // 
+            this.labelCylinderRadius.AutoSize = true;
+            this.labelCylinderRadius.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelCylinderRadius.Location = new System.Drawing.Point(8, 153);
+            this.labelCylinderRadius.Margin = new System.Windows.Forms.Padding(3);
+            this.labelCylinderRadius.Name = "labelCylinderRadius";
+            this.labelCylinderRadius.Padding = new System.Windows.Forms.Padding(3);
+            this.labelCylinderRadius.Size = new System.Drawing.Size(107, 24);
+            this.labelCylinderRadius.TabIndex = 8;
+            this.labelCylinderRadius.Text = "圆柱体半径";
+            this.labelCylinderRadius.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelCylinderHeight
+            // 
+            this.labelCylinderHeight.AutoSize = true;
+            this.labelCylinderHeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelCylinderHeight.Location = new System.Drawing.Point(8, 183);
+            this.labelCylinderHeight.Margin = new System.Windows.Forms.Padding(3);
+            this.labelCylinderHeight.Name = "labelCylinderHeight";
+            this.labelCylinderHeight.Padding = new System.Windows.Forms.Padding(3);
+            this.labelCylinderHeight.Size = new System.Drawing.Size(107, 24);
+            this.labelCylinderHeight.TabIndex = 9;
+            this.labelCylinderHeight.Text = "圆柱体高度";
+            this.labelCylinderHeight.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textCylinderRadius
+            // 
+            this.textCylinderRadius.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textCylinderRadius.EditValue = "50";
+            this.textCylinderRadius.Location = new System.Drawing.Point(121, 153);
+            this.textCylinderRadius.Name = "textCylinderRadius";
+            this.textCylinderRadius.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
+            this.textCylinderRadius.Properties.MaskSettings.Set("mask", "d");
+            this.textCylinderRadius.Properties.UseMaskAsDisplayFormat = true;
+            this.textCylinderRadius.Size = new System.Drawing.Size(165, 20);
+            this.textCylinderRadius.TabIndex = 10;
+            // 
+            // textCylinderHeight
+            // 
+            this.textCylinderHeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textCylinderHeight.EditValue = "100";
+            this.textCylinderHeight.Location = new System.Drawing.Point(121, 183);
+            this.textCylinderHeight.Name = "textCylinderHeight";
+            this.textCylinderHeight.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
+            this.textCylinderHeight.Properties.MaskSettings.Set("mask", "d");
+            this.textCylinderHeight.Properties.UseMaskAsDisplayFormat = true;
+            this.textCylinderHeight.Size = new System.Drawing.Size(165, 20);
+            this.textCylinderHeight.TabIndex = 11;
+            // 
+            // btnCreateCylinder
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.btnCreateCylinder, 2);
+            this.btnCreateCylinder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCreateCylinder.Location = new System.Drawing.Point(8, 213);
+            this.btnCreateCylinder.Name = "btnCreateCylinder";
+            this.btnCreateCylinder.Size = new System.Drawing.Size(278, 29);
+            this.btnCreateCylinder.TabIndex = 12;
+            this.btnCreateCylinder.Text = "创建圆柱体";
+            this.btnCreateCylinder.UseVisualStyleBackColor = true;
+            this.btnCreateCylinder.Click += new System.EventHandler(this.btnCreateCylinder_Click);
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.viewPanel, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.viewPanel, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1055, 714);
             this.tableLayoutPanel2.TabIndex = 1;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.button1, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button2, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(1, 1);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(300, 30);
-            this.tableLayoutPanel3.TabIndex = 2;
             // 
             // viewPanel
             // 
             this.viewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.viewPanel.Location = new System.Drawing.Point(305, 35);
+            this.viewPanel.Location = new System.Drawing.Point(303, 3);
             this.viewPanel.Name = "viewPanel";
-            this.viewPanel.Size = new System.Drawing.Size(746, 675);
-            this.viewPanel.TabIndex = 3;
+            this.viewPanel.Size = new System.Drawing.Size(749, 708);
+            this.viewPanel.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -263,18 +271,16 @@
             this.ClientSize = new System.Drawing.Size(1055, 714);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "MainForm";
-            this.Text = "参数建模Demo";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Text = "参数建模示例";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textFilletRadius.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textDraftAngle.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textHeight.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textWidth.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textLength.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textWidth.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textHeight.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textCylinderRadius.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textCylinderHeight.Properties)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -282,21 +288,20 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label labelLength;
+        private System.Windows.Forms.Label labelWidth;
+        private System.Windows.Forms.Label labelHeight;
         private DevExpress.XtraEditors.TextEdit textLength;
-        private DevExpress.XtraEditors.TextEdit textFilletRadius;
-        private DevExpress.XtraEditors.TextEdit textDraftAngle;
-        private DevExpress.XtraEditors.TextEdit textHeight;
         private DevExpress.XtraEditors.TextEdit textWidth;
+        private DevExpress.XtraEditors.TextEdit textHeight;
+        private System.Windows.Forms.Button btnCreateBox;
+        private System.Windows.Forms.Label labelSeparator;
+        private System.Windows.Forms.Label labelCylinderRadius;
+        private System.Windows.Forms.Label labelCylinderHeight;
+        private DevExpress.XtraEditors.TextEdit textCylinderRadius;
+        private DevExpress.XtraEditors.TextEdit textCylinderHeight;
+        private System.Windows.Forms.Button btnCreateCylinder;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel viewPanel;
     }
 }
-

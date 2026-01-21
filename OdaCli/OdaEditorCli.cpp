@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "OdaWrapper.h"
+#include "OdaEditorCli.h"
 #include "../OdaNative/OdaEngine.h"
 
 using namespace OdaCliWrapper;
@@ -21,7 +21,17 @@ void OdaViewer::DrawBox(BoxParamCli^ p)
     OdaEngine::Instance().Redraw();
 }
 
+void OdaViewer::DrawCylinder(CylinderParamCli^ p)
+{
+    CylinderParam native;
+    native.radius = p->Radius;
+    native.height = p->Height;
+
+    OdaEngine::Instance().CreateOrUpdateCylinder(native);
+    OdaEngine::Instance().Redraw();
+}
+
 double OdaViewer::GetHeight()
 {
-    return OdaEngine::Instance().GetCurrentHeight();
+    return OdaEngine::Instance().GetHeight();
 }

@@ -24,6 +24,9 @@
     <ClInclude Include="OdaEngine.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="OdaInitilize.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -35,5 +38,11 @@
     <ClCompile Include="OdaEngine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="OdaInitilize.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ThirdParty.props" />
   </ItemGroup>
 </Project>

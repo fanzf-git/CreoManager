@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace BIMManager
 {
-
     [StructLayout(LayoutKind.Sequential)]
     public struct PartParams
     {
