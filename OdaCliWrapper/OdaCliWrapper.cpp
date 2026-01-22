@@ -1,76 +1,58 @@
+#define _CLR_SAFE
+
 #include "pch.h"
+#include <msclr/marshal.h>
+#include <msclr/marshal_cppstd.h>
+#include "../OdaNative/OdaNativeApi.h"
+
 #include "OdaCliWrapper.h"
 
-// Native C API
-#include "..\OdaNative\OdaNativeApi.h"
-
-#include <msclr/marshal.h>
-
+using namespace System;
+using namespace System::Runtime::InteropServices;
 using namespace msclr::interop;
-using namespace OdaCliWrapper;
 
-// ============================================================================
-// OdaNativeApiWrapper 实现（专门负责转调 OdaNative 的 C API）
-// ============================================================================
-
-bool OdaNativeApiWrapper::Initialize(OdaInitParam param)
+namespace OdaCliWrapper
 {
-    if (String::IsNullOrWhiteSpace(param.RuntimePath))
-        return false;
+	bool SimpleDraw::Initialize(String^ runtimePath, IntPtr hostHwnd)
+	{
+		if (runtimePath == nullptr)
+			return false;
 
-    marshal_context ctx;
+		marshal_context ctx;
 
-    ::OdaInitParam native{};
-    native.runtimePath = ctx.marshal_as<const wchar_t*>(param.RuntimePath);
-    native.hostHwnd = param.HostWindow.ToPointer();
+		OdaInitParam param{};
+		param.runtimePath = ctx.marshal_as<const wchar_t*>(runtimePath);
+		param.hostHwnd = hostHwnd.ToPointer();
 
-    return Oda_Initialize(&native);
-}
+		return Oda_Initialize(&param);
+	}
 
-bool OdaNativeApiWrapper::CreateOrUpdateBox(OdaBoxParam param)
-{
-    ::OdaBoxParam native{};
-    native.length = param.Length;
-    native.width = param.Width;
-    native.height = param.Height;
+	bool SimpleDraw::CreateOrUpdateBox(
+		double length,
+		double width,
+		double height)
+	{
+		OdaBoxParam param{};
+		param.length = length;
+		param.width = width;
+		param.height = height;
 
-    return Oda_CreateOrUpdateBox(&native);
-}
+		return Oda_CreateOrUpdateBox(&param);
+	}
 
-bool OdaNativeApiWrapper::CreateOrUpdateCylinder(OdaCylinderParam param)
-{
-    ::OdaCylinderParam native{};
-    native.radius = param.Radius;
-    native.height = param.Height;
+	bool SimpleDraw::CreateOrUpdateCylinder(
+		double radius,
+		double height)
+	{
+		OdaCylinderParam param{};
+		param.radius = radius;
+		param.height = height;
 
-    return Oda_CreateOrUpdateCylinder(&native);
-}
+		return Oda_CreateOrUpdateCylinder(&param);
+	}
 
-double OdaNativeApiWrapper::GetHeight()
-{
-    return Oda_GetHeight();
-}
-
-// ============================================================================
-// OdaEditor 实现（使用 OdaNativeApiWrapper 进行转调）
-// ============================================================================
-
-bool OdaEditor::Initialize(OdaInitParam param)
-{
-    return OdaNativeApiWrapper::Initialize(param);
-}
-
-bool OdaEditor::CreateOrUpdateBox(OdaBoxParam param)
-{
-    return OdaNativeApiWrapper::CreateOrUpdateBox(param);
-}
-
-bool OdaEditor::CreateOrUpdateCylinder(OdaCylinderParam param)
-{
-    return OdaNativeApiWrapper::CreateOrUpdateCylinder(param);
-}
-
-double OdaEditor::GetHeight()
-{
-    return OdaNativeApiWrapper::GetHeight();
+	double SimpleDraw::GetHeight()
+	{
+		return Oda_GetHeight();
+	}
 }
