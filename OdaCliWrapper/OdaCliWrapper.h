@@ -9,9 +9,8 @@ namespace OdaCliWrapper {
 		/// <summary>
 		/// 初始化 ODA
 		/// </summary>
-		/// <param name="runtimePath">ODA Runtime / License 路径</param>
 		/// <param name="hostHwnd">WinForms.Handle 或 WPF HwndSource.Handle</param>
-		static bool Initialize(String^ runtimePath, IntPtr hostHwnd);
+		static bool Initialize(IntPtr hostHwnd);
 
 		/// <summary>
 		/// 创建或更新 Box

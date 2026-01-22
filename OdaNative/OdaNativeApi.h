@@ -15,12 +15,6 @@ extern "C" {
 
     // ----------------- 参数结构 -----------------
 
-    struct OdaInitParam
-    {
-        const wchar_t* runtimePath;  // ODA Runtime / License 路径
-        void* hostHwnd;              // WinForms.Handle / WPF HwndSource.Handle
-    };
-
     struct OdaBoxParam
     {
         double length;
@@ -36,7 +30,7 @@ extern "C" {
 
     // ----------------- 初始化 -----------------
 
-    ODA_API bool Oda_Initialize(const OdaInitParam* param);
+    ODA_API bool Oda_Initialize(HWND hwnd);
 
     // ----------------- 建模接口 -----------------
 

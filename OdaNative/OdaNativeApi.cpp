@@ -9,14 +9,10 @@
 // ============================================================================
 extern "C"
 {
-	bool Oda_Initialize(const OdaInitParam* param)
+	bool Oda_Initialize(HWND hwnd)
 	{
-		if (!param) return false;
-
 		// 使用单例模式
 		auto& engine = OdaEngine::Instance();
-		HWND hwnd = param->hostHwnd ? static_cast<HWND>(param->hostHwnd) : nullptr;
-		
 		return engine.Initialize(hwnd);
 	}
 

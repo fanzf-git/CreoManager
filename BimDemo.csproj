@@ -47,6 +47,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.5-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="OdaCliWrapper">
+      <HintPath>x64\Release\OdaCliWrapper.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -102,4 +105,7 @@
   </ItemGroup>
   <!-- PostBuildEvent 已移除，因为 CreoWrapper 现在直接输出到 C# 项目的输出目录 -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y /D "$(SolutionDir)x64\Release\OdaNative.dll" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

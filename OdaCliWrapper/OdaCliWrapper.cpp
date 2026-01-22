@@ -13,18 +13,10 @@ using namespace msclr::interop;
 
 namespace OdaCliWrapper
 {
-	bool SimpleDraw::Initialize(String^ runtimePath, IntPtr hostHwnd)
+	bool SimpleDraw::Initialize(IntPtr hostHwnd)
 	{
-		if (runtimePath == nullptr)
-			return false;
-
-		marshal_context ctx;
-
-		OdaInitParam param{};
-		param.runtimePath = ctx.marshal_as<const wchar_t*>(runtimePath);
-		param.hostHwnd = hostHwnd.ToPointer();
-
-		return Oda_Initialize(&param);
+		HWND hwnd = static_cast<HWND>(hostHwnd.ToPointer());
+		return Oda_Initialize(hwnd);
 	}
 
 	bool SimpleDraw::CreateOrUpdateBox(

@@ -6,8 +6,6 @@ namespace BIMManager
 {
     public partial class MainForm : Form
     {
-        private OdaViewer _viewer = new OdaViewer();
-
         public MainForm()
         {
             InitializeComponent();
@@ -29,16 +27,11 @@ namespace BIMManager
                     MessageBox.Show("长度、宽度和高度必须大于0", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-                var param = new BoxParamCli
+                var result = SimpleDraw.CreateOrUpdateBox(length, width, height);
+                if (result)
                 {
-                    Length = length,
-                    Width = width,
-                    Height = height
-                };
-
-                _viewer.DrawBox(param);
-                MessageBox.Show("盒子创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("盒子创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (FormatException)
             {
@@ -66,14 +59,11 @@ namespace BIMManager
                     return;
                 }
 
-                var param = new CylinderParamCli
+                var result = SimpleDraw.CreateOrUpdateCylinder(radius, height);
+                if (result)
                 {
-                    Radius = radius,
-                    Height = height
-                };
-
-                _viewer.DrawCylinder(param);
-                MessageBox.Show("圆柱体创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("圆柱体创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (FormatException)
             {
@@ -87,7 +77,7 @@ namespace BIMManager
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _viewer.Init(viewPanel.Handle);
+            bool ok = SimpleDraw.Initialize(this.Handle);
         }
 
         private void btnCreateBox_Click(object sender, EventArgs e)
