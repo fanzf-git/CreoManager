@@ -1,5 +1,0 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Label="UserMacros">
-    <ODA_SDK_DIR>$(SolutionDir)\packages\Kernel_vc17_amd64dll_26.12</ODA_SDK_DIR>
-  </PropertyGroup>
-</Project>

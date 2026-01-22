@@ -1,8 +1,8 @@
-﻿// ODA SDK 要求：每个 cpp 文件必须首先包含 OdaCommon.h
-#include "OdaCommon.h"
+﻿#include "OdaCommon.h"
 
 #include "pch.h"
 #include "OdaEngine.h"
+#include "OdaInitilize.h"
 
 // ===== ODA =====
 // 先包含基础头文件（这些头文件会定义 OdSmartPtr）
@@ -10,9 +10,6 @@
 #include "RxInit.h"
 #include "RxObject.h"  // OdSmartPtr 定义在这里
 #include "OdAnsiString.h"  // OdAnsiString 定义在这里
-
-// ODA 授权信息
-#include "OdaActivationInfo.h"
 
 // DbDatabase 等头文件在 ODAToolkit\Drawing\Include 目录下，直接包含文件名
 #include "DbDatabase.h"
@@ -29,68 +26,102 @@ OdaEngine& OdaEngine::Instance()
     return inst;
 }
 
-void OdaEngine::Initialize(HWND hwnd)
+bool OdaEngine::Initialize(HWND hwnd)
 {
-    m_hwnd = hwnd;
-
-    // 从文件读取 ODA SDK 授权信息
-    std::string activationFilePath = OdaActivation::GetDefaultActivationFilePath();
-    auto activationInfo = OdaActivation::ReadActivationInfo(activationFilePath);
-    
-    if (!activationInfo.first.empty() && !activationInfo.second.empty())
+    // 确保 ODA 已经初始化
+    if (!OdaInitializer::IsInitialized())
     {
-        // ODA SDK 授权激活（必须在 odInitialize 之前调用）
-        odActivate(OdAnsiString(activationInfo.first.c_str()), 
-                   OdAnsiString(activationInfo.second.c_str()));
+        if (!OdaInitializer::Initialize())
+        {
+            return false;  // ODA 初始化失败
+        }
     }
-
-    // 初始化 ODA Runtime
-    odInitialize(nullptr);
-
-    m_db = OdDbDatabase::createObject();
-}
-
-void OdaEngine::CreateOrUpdateBox(const BoxParam& p)
-{
-    if (!m_box.isNull())
-        m_box->erase();
-
-    m_box = OdDb3dSolid::createObject();
-    m_box->createBox(p.length, p.width, p.height);
-
-    OdDbBlockTablePtr bt =
-        m_db->getBlockTableId().safeOpenObject(OdDb::kForWrite);
-
-    OdDbBlockTableRecordPtr ms =
-        bt->getAt(OD_T("MODEL_SPACE")).safeOpenObject(OdDb::kForWrite);
-
-    ms->appendOdDbEntity(m_box);
-}
-
-void OdaEngine::CreateOrUpdateCylinder(const CylinderParam& p)
-{
-    // 删除旧的圆柱体
-    if (!m_cylinder.isNull())
-        m_cylinder->erase();
-
-    // 创建新的圆柱体
-    // 注意：ODA SDK 的 OdDb3dSolid 可能不直接支持 createCylinder
-    // 这里使用 createBox 作为临时方案，实际项目中需要使用 BRep 或其他方法创建圆柱体
-    // 或者使用扩展的 3D Solid 类（如 OcDb3dSolid）
-    m_cylinder = OdDb3dSolid::createObject();
     
-    // 临时方案：使用 box 近似圆柱体（实际应该使用 BRep 创建真正的圆柱体）
-    // 这里创建一个正方形截面的柱体来近似圆柱体
-    double diameter = p.radius * 2.0;
-    m_cylinder->createBox(diameter, diameter, p.height);
+    m_hwnd = hwnd;
+    
+    // 创建新的数据库
+    m_db = OdDbDatabase::createObject();
+    
+    m_initialized = true;
+    return true;
+}
 
-    OdDbBlockTablePtr bt =
-        m_db->getBlockTableId().safeOpenObject(OdDb::kForWrite);
+bool OdaEngine::CreateOrUpdateBox(const BoxParam& p)
+{
+    if (!m_initialized || m_db.isNull())
+    {
+        return false;
+    }
+    
+    try
+    {
+        // 删除旧的 Box
+        if (!m_box.isNull())
+        {
+            m_box->erase();
+        }
 
-    OdDbBlockTableRecordPtr ms =
-        bt->getAt(OD_T("MODEL_SPACE")).safeOpenObject(OdDb::kForWrite);
+        // 创建新的 Box
+        m_box = OdDb3dSolid::createObject();
+        m_box->createBox(p.length, p.width, p.height);
 
-    ms->appendOdDbEntity(m_cylinder);
+        // 获取模型空间
+        OdDbBlockTablePtr bt =
+            m_db->getBlockTableId().safeOpenObject(OdDb::kForWrite);
+
+        OdDbBlockTableRecordPtr ms =
+            bt->getAt(OD_T("MODEL_SPACE")).safeOpenObject(OdDb::kForWrite);
+
+        // 添加到模型空间
+        ms->appendOdDbEntity(m_box);
+        
+        return true;
+    }
+    catch (...)
+    {
+        return false;
+    }
+}
+
+bool OdaEngine::CreateOrUpdateCylinder(const CylinderParam& p)
+{
+    if (!m_initialized || m_db.isNull())
+    {
+        return false;
+    }
+    
+    try
+    {
+        // 删除旧的圆柱体
+        if (!m_cylinder.isNull())
+        {
+            m_cylinder->erase();
+        }
+
+        // 创建新的圆柱体
+        // 或者使用扩展的 3D Solid 类（如 OcDb3dSolid）
+        m_cylinder = OdDb3dSolid::createObject();
+        
+        // 这里创建一个正方形截面的柱体来近似圆柱体
+        double diameter = p.radius * 2.0;
+        m_cylinder->createBox(diameter, diameter, p.height);
+
+        // 获取模型空间
+        OdDbBlockTablePtr bt =
+            m_db->getBlockTableId().safeOpenObject(OdDb::kForWrite);
+
+        OdDbBlockTableRecordPtr ms =
+            bt->getAt(OD_T("MODEL_SPACE")).safeOpenObject(OdDb::kForWrite);
+
+        // 添加到模型空间
+        ms->appendOdDbEntity(m_cylinder);
+        
+        return true;
+    }
+    catch (...)
+    {
+        return false;
+    }
 }
 
 void OdaEngine::Redraw()

@@ -100,12 +100,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="OdaCli\OdaCli.vcxproj">
-      <Project>{335bde36-630d-4218-a4cb-e4ffc712c408}</Project>
-      <Name>OdaCliWrapper</Name>
-    </ProjectReference>
-  </ItemGroup>
   <!-- PostBuildEvent 已移除，因为 CreoWrapper 现在直接输出到 C# 项目的输出目录 -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

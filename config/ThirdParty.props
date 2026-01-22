@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <UserOdaLib>$(SolutionDir)\packages\Kernel_vc17_amd64dll_26.12\lib\vc17_amd64dll</UserOdaLib>
+    <UserOdaInc>$(SolutionDir)\packages\Kernel_vc17_amd64dll_26.12\</UserOdaInc>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)OdaImport.props" />
+</Project>
