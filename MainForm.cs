@@ -32,6 +32,10 @@ namespace BIMViewDemo
                 {
                     MessageBox.Show("盒子创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else
+                {
+                    MessageBox.Show("盒子创建失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (FormatException)
             {
@@ -64,6 +68,10 @@ namespace BIMViewDemo
                 {
                     MessageBox.Show("圆柱体创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else
+                {
+                    MessageBox.Show("圆柱体创建失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (FormatException)
             {
@@ -80,7 +88,7 @@ namespace BIMViewDemo
         {
             try
             {
-                bool ok = OdaCliWrapper.SimpleDraw.Initialize(this.viewPanel.Handle);
+                bool ok = OdaCliWrapper.SimpleDraw.Initialize(this.bimViewEditor.Handle);
                 if (!ok)
                 {
                     MessageBox.Show("ODA 初始化失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);

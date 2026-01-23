@@ -5,6 +5,8 @@
 x64/
 x86/
 [Ww]in32/
+[Dd]ebug/
+[Rr]elease/
 
 # NuGet 包目录（可通过 packages.config 和 nuget restore 恢复）
 packages/

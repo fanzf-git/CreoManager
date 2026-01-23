@@ -44,8 +44,10 @@ namespace BIMViewDemo
             this.btnCreateCylinder = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.viewPanel = new System.Windows.Forms.Panel();
+            this.bimViewEditor = new BIMViewDemo.BimViewEditor();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.viewPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -248,11 +250,20 @@ namespace BIMViewDemo
             // 
             // viewPanel
             // 
+            this.viewPanel.Controls.Add(this.bimViewEditor);
             this.viewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.viewPanel.Location = new System.Drawing.Point(305, 4);
             this.viewPanel.Name = "viewPanel";
             this.viewPanel.Size = new System.Drawing.Size(749, 706);
             this.viewPanel.TabIndex = 1;
+            // 
+            // bimViewEditor
+            // 
+            this.bimViewEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bimViewEditor.Location = new System.Drawing.Point(0, 0);
+            this.bimViewEditor.Name = "bimViewEditor";
+            this.bimViewEditor.Size = new System.Drawing.Size(749, 706);
+            this.bimViewEditor.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -266,6 +277,7 @@ namespace BIMViewDemo
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.viewPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -288,5 +300,6 @@ namespace BIMViewDemo
         private System.Windows.Forms.Button btnCreateCylinder;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel viewPanel;
+        private BimViewEditor bimViewEditor;
     }
 }
