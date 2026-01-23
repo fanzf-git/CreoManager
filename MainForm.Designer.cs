@@ -1,4 +1,4 @@
-﻿namespace BIMManager
+namespace BIMViewDemo
 {
     partial class MainForm
     {
@@ -32,24 +32,19 @@
             this.labelLength = new System.Windows.Forms.Label();
             this.labelWidth = new System.Windows.Forms.Label();
             this.labelHeight = new System.Windows.Forms.Label();
-            this.textLength = new DevExpress.XtraEditors.TextEdit();
-            this.textWidth = new DevExpress.XtraEditors.TextEdit();
-            this.textHeight = new DevExpress.XtraEditors.TextEdit();
+            this.textLength = new System.Windows.Forms.TextBox();
+            this.textWidth = new System.Windows.Forms.TextBox();
+            this.textHeight = new System.Windows.Forms.TextBox();
             this.btnCreateBox = new System.Windows.Forms.Button();
             this.labelSeparator = new System.Windows.Forms.Label();
             this.labelCylinderRadius = new System.Windows.Forms.Label();
             this.labelCylinderHeight = new System.Windows.Forms.Label();
-            this.textCylinderRadius = new DevExpress.XtraEditors.TextEdit();
-            this.textCylinderHeight = new DevExpress.XtraEditors.TextEdit();
+            this.textCylinderRadius = new System.Windows.Forms.TextBox();
+            this.textCylinderHeight = new System.Windows.Forms.TextBox();
             this.btnCreateCylinder = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.viewPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textLength.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textWidth.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textHeight.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textCylinderRadius.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textCylinderHeight.Properties)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,7 +67,7 @@
             this.tableLayoutPanel1.Controls.Add(this.textCylinderHeight, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.btnCreateCylinder, 0, 7);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel1.RowCount = 9;
@@ -85,7 +80,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 708);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 706);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // labelLength
@@ -130,29 +125,29 @@
             // textLength
             // 
             this.textLength.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textLength.EditValue = "100";
             this.textLength.Location = new System.Drawing.Point(121, 8);
             this.textLength.Name = "textLength";
-            this.textLength.Size = new System.Drawing.Size(165, 20);
+            this.textLength.Size = new System.Drawing.Size(165, 21);
             this.textLength.TabIndex = 3;
+            this.textLength.Text = "100";
             // 
             // textWidth
             // 
             this.textWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textWidth.EditValue = "25";
             this.textWidth.Location = new System.Drawing.Point(121, 38);
             this.textWidth.Name = "textWidth";
-            this.textWidth.Size = new System.Drawing.Size(165, 20);
+            this.textWidth.Size = new System.Drawing.Size(165, 21);
             this.textWidth.TabIndex = 4;
+            this.textWidth.Text = "25";
             // 
             // textHeight
             // 
             this.textHeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textHeight.EditValue = "30";
             this.textHeight.Location = new System.Drawing.Point(121, 68);
             this.textHeight.Name = "textHeight";
-            this.textHeight.Size = new System.Drawing.Size(165, 20);
+            this.textHeight.Size = new System.Drawing.Size(165, 21);
             this.textHeight.TabIndex = 5;
+            this.textHeight.Text = "30";
             // 
             // btnCreateBox
             // 
@@ -208,26 +203,20 @@
             // textCylinderRadius
             // 
             this.textCylinderRadius.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textCylinderRadius.EditValue = "50";
             this.textCylinderRadius.Location = new System.Drawing.Point(121, 153);
             this.textCylinderRadius.Name = "textCylinderRadius";
-            this.textCylinderRadius.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            this.textCylinderRadius.Properties.MaskSettings.Set("mask", "d");
-            this.textCylinderRadius.Properties.UseMaskAsDisplayFormat = true;
-            this.textCylinderRadius.Size = new System.Drawing.Size(165, 20);
+            this.textCylinderRadius.Size = new System.Drawing.Size(165, 21);
             this.textCylinderRadius.TabIndex = 10;
+            this.textCylinderRadius.Text = "50";
             // 
             // textCylinderHeight
             // 
             this.textCylinderHeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textCylinderHeight.EditValue = "100";
             this.textCylinderHeight.Location = new System.Drawing.Point(121, 183);
             this.textCylinderHeight.Name = "textCylinderHeight";
-            this.textCylinderHeight.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            this.textCylinderHeight.Properties.MaskSettings.Set("mask", "d");
-            this.textCylinderHeight.Properties.UseMaskAsDisplayFormat = true;
-            this.textCylinderHeight.Size = new System.Drawing.Size(165, 20);
+            this.textCylinderHeight.Size = new System.Drawing.Size(165, 21);
             this.textCylinderHeight.TabIndex = 11;
+            this.textCylinderHeight.Text = "100";
             // 
             // btnCreateCylinder
             // 
@@ -243,6 +232,7 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -259,9 +249,9 @@
             // viewPanel
             // 
             this.viewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.viewPanel.Location = new System.Drawing.Point(303, 3);
+            this.viewPanel.Location = new System.Drawing.Point(305, 4);
             this.viewPanel.Name = "viewPanel";
-            this.viewPanel.Size = new System.Drawing.Size(749, 708);
+            this.viewPanel.Size = new System.Drawing.Size(749, 706);
             this.viewPanel.TabIndex = 1;
             // 
             // MainForm
@@ -275,11 +265,6 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textLength.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textWidth.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textHeight.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textCylinderRadius.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textCylinderHeight.Properties)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -291,15 +276,15 @@
         private System.Windows.Forms.Label labelLength;
         private System.Windows.Forms.Label labelWidth;
         private System.Windows.Forms.Label labelHeight;
-        private DevExpress.XtraEditors.TextEdit textLength;
-        private DevExpress.XtraEditors.TextEdit textWidth;
-        private DevExpress.XtraEditors.TextEdit textHeight;
+        private System.Windows.Forms.TextBox textLength;
+        private System.Windows.Forms.TextBox textWidth;
+        private System.Windows.Forms.TextBox textHeight;
         private System.Windows.Forms.Button btnCreateBox;
         private System.Windows.Forms.Label labelSeparator;
         private System.Windows.Forms.Label labelCylinderRadius;
         private System.Windows.Forms.Label labelCylinderHeight;
-        private DevExpress.XtraEditors.TextEdit textCylinderRadius;
-        private DevExpress.XtraEditors.TextEdit textCylinderHeight;
+        private System.Windows.Forms.TextBox textCylinderRadius;
+        private System.Windows.Forms.TextBox textCylinderHeight;
         private System.Windows.Forms.Button btnCreateCylinder;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel viewPanel;

@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
-using OdaCliWrapper;
 
-namespace BIMManager
+namespace BIMViewDemo
 {
     public partial class MainForm : Form
     {
         public MainForm()
         {
+            this.AutoScaleMode = AutoScaleMode.None;
             InitializeComponent();
         }
 
@@ -27,7 +27,7 @@ namespace BIMManager
                     MessageBox.Show("长度、宽度和高度必须大于0", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                var result = SimpleDraw.CreateOrUpdateBox(length, width, height);
+                var result = OdaCliWrapper.SimpleDraw.CreateOrUpdateBox(length, width, height);
                 if (result)
                 {
                     MessageBox.Show("盒子创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -59,7 +59,7 @@ namespace BIMManager
                     return;
                 }
 
-                var result = SimpleDraw.CreateOrUpdateCylinder(radius, height);
+                var result = OdaCliWrapper.SimpleDraw.CreateOrUpdateCylinder(radius, height);
                 if (result)
                 {
                     MessageBox.Show("圆柱体创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -75,9 +75,21 @@ namespace BIMManager
             }
         }
 
+
         private void MainForm_Load(object sender, EventArgs e)
         {
-            bool ok = SimpleDraw.Initialize(this.Handle);
+            try
+            {
+                bool ok = OdaCliWrapper.SimpleDraw.Initialize(this.viewPanel.Handle);
+                if (!ok)
+                {
+                    MessageBox.Show("ODA 初始化失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"初始化失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnCreateBox_Click(object sender, EventArgs e)

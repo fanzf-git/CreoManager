@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -6,12 +6,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{69FC89B0-1F7A-4F4F-B072-AB14A5D32929}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>BIMManager</RootNamespace>
-    <AssemblyName>BIMManager</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>BIMViewDemo</RootNamespace>
+    <AssemblyName>BIMViewDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -48,7 +49,8 @@
       <HintPath>packages\Newtonsoft.Json.13.0.5-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="OdaCliWrapper">
-      <HintPath>x64\Release\OdaCliWrapper.dll</HintPath>
+      <HintPath>$(SolutionDir)x64\Debug\OdaCliWrapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -88,6 +90,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -103,9 +106,39 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <!-- PostBuildEvent 已移除，因为 CreoWrapper 现在直接输出到 C# 项目的输出目录 -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy /Y /D "$(SolutionDir)x64\Release\OdaNative.dll" "$(TargetDir)"</PostBuildEvent>
+  <!-- 定义 ODA SDK 路径变量 -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OdaSdkExePath>$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\vc17_amd64dlldbg</OdaSdkExePath>
+    <OdaNativeDllPath>$(SolutionDir)x64\Debug\OdaNative.dll</OdaNativeDllPath>
+    <OdaCliWrapperDllPath>$(SolutionDir)x64\Debug\OdaCliWrapper.dll</OdaCliWrapperDllPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OdaSdkExePath>$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\vc17_amd64dll</OdaSdkExePath>
+    <OdaNativeDllPath>$(SolutionDir)x64\Release\OdaNative.dll</OdaNativeDllPath>
+    <OdaCliWrapperDllPath>$(SolutionDir)x64\Release\OdaCliWrapper.dll</OdaCliWrapperDllPath>
+  </PropertyGroup>
+  <!-- 复制 DLL 文件 -->
+  <Target Name="CopyOdaDlls" AfterTargets="Build">
+    <Message Text="开始复制 ODA DLL 文件..." Importance="high" />
+    <!-- 复制 OdaNative.dll -->
+    <Copy SourceFiles="$(OdaNativeDllPath)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="Exists('$(OdaNativeDllPath)')">
+      <Output TaskParameter="CopiedFiles" ItemName="CopiedDlls" />
+    </Copy>
+    <Warning Text="OdaNative.dll 未找到: $(OdaNativeDllPath)" Condition="!Exists('$(OdaNativeDllPath)')" />
+    <!-- 复制 OdaCliWrapper.dll -->
+    <Copy SourceFiles="$(OdaCliWrapperDllPath)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="Exists('$(OdaCliWrapperDllPath)')">
+      <Output TaskParameter="CopiedFiles" ItemName="CopiedDlls" />
+    </Copy>
+    <Warning Text="OdaCliWrapper.dll 未找到: $(OdaCliWrapperDllPath)" Condition="!Exists('$(OdaCliWrapperDllPath)')" />
+    <!-- 复制 ODA SDK 运行时 DLL -->
+    <ItemGroup>
+      <OdaSdkDlls Include="$(OdaSdkExePath)\*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(OdaSdkDlls)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="Exists('$(OdaSdkExePath)')">
+      <Output TaskParameter="CopiedFiles" ItemName="CopiedDlls" />
+    </Copy>
+    <Warning Text="ODA SDK DLL 目录未找到: $(OdaSdkExePath)" Condition="!Exists('$(OdaSdkExePath)')" />
+    <Message Text="已复制 DLL 文件: @(CopiedDlls)" Importance="normal" Condition="'@(CopiedDlls)' != ''" />
+  </Target>
 </Project>
