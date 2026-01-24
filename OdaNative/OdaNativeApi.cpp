@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "OdaNativeApi.h"
 #include "OdaEngine.h"
+#include "OdaInitilize.h"
 
 // ============================================================================
 // 纯 C 接口实现
@@ -23,9 +24,8 @@ extern "C"
 		BoxParam box{ param->length, param->width, param->height };
 		auto& engine = OdaEngine::Instance();
 
-		bool ok = engine.CreateOrUpdateBox(box);
-		if (ok) engine.Redraw();
-		return ok;
+		// OdaEngine::CreateOrUpdateBox 内部已经调用 Redraw，这里不再重复刷新，避免多次 update 叠加导致调试版断言。
+		return engine.CreateOrUpdateBox(box);
 	}
 
 	bool Oda_CreateOrUpdateCylinder(const OdaCylinderParam* param)
@@ -35,9 +35,8 @@ extern "C"
 		CylinderParam cylinder{ param->radius, param->height };
 		auto& engine = OdaEngine::Instance();
 
-		bool ok = engine.CreateOrUpdateCylinder(cylinder);
-		if (ok) engine.Redraw();
-		return ok;
+		// OdaEngine::CreateOrUpdateCylinder 内部已经调用 Redraw，这里不再重复刷新。
+		return engine.CreateOrUpdateCylinder(cylinder);
 	}
 
 	double Oda_GetHeight()
@@ -45,4 +44,10 @@ extern "C"
 		auto& engine = OdaEngine::Instance();
 		return engine.GetHeight();
 	}
+
+  void Oda_Cleanup()
+  {
+    // 显式清理 ODA，配合 OdaInitializerImpl::Cleanup/odUninitialize/odCleanUpStaticData
+    OdaInitializer::Cleanup();
+  }
 }

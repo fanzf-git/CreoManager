@@ -82,14 +82,16 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <!-- 使用 UserOdaLib 作为 ODA 头文件根路径 -->
+      <AdditionalIncludeDirectories>$(UserOdaLib)\Drawing\Include;$(UserOdaLib)\KernelBase\Include;$(UserOdaLib)\Kernel\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(UserOdaLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <!-- UserOdaLib 指向 ODA 安装目录（其下 lib 里有 .lib） -->
+      <AdditionalLibraryDirectories>$(UserOdaLib)\lib\vc17_amd64dlldbg;$(UserOdaLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TD_Root.lib;TD_DbRoot.lib;TD_Db.lib;TD_Alloc.lib;TD_Key.lib;TD_DbCore.lib;TD_DbEntities.lib;TD_DbIO.lib;TD_Ge.lib;TD_Tf.lib;TD_TfCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -103,7 +105,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserOdaLib)\Drawing\Include;$(UserOdaLib)\KernelBase\Include;$(UserOdaLib)\Kernel\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -112,7 +114,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(UserOdaLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserOdaLib)\lib\vc17_amd64dll;$(UserOdaLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TD_Root.lib;TD_DbRoot.lib;TD_Db.lib;TD_Alloc.lib;TD_Key.lib;TD_DbCore.lib;TD_DbEntities.lib;TD_DbIO.lib;TD_Ge.lib;TD_Tf.lib;TD_TfCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -124,14 +126,14 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserOdaLib)\Drawing\Include;$(UserOdaLib)\KernelBase\Include;$(UserOdaLib)\Kernel\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(UserOdaLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserOdaLib)\lib\vc17_amd64dlldbg;$(UserOdaLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TD_Root.lib;TD_DbRoot.lib;TD_Db.lib;TD_Alloc.lib;TD_Key.lib;TD_DbCore.lib;TD_DbEntities.lib;TD_DbIO.lib;TD_Ge.lib;TD_Tf.lib;TD_TfCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -145,7 +147,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserOdaLib)\Drawing\Include;$(UserOdaLib)\KernelBase\Include;$(UserOdaLib)\Kernel\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -154,7 +156,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(UserOdaLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserOdaLib)\lib\vc17_amd64dll;$(UserOdaLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TD_Root.lib;TD_DbRoot.lib;TD_Db.lib;TD_Alloc.lib;TD_Key.lib;TD_DbCore.lib;TD_DbEntities.lib;TD_DbIO.lib;TD_Ge.lib;TD_Tf.lib;TD_TfCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

@@ -182,8 +182,27 @@
     <Copy SourceFiles="@(OdaSdkTxFilesFromExeParent)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxFilesFromExeParent)' != ''">
       <Output TaskParameter="CopiedFiles" ItemName="CopiedTxFiles" />
     </Copy>
+    <!-- 复制 ODA SDK 向量器模块文件 (.txv) -->
+    <Message Text="开始复制 ODA SDK 向量器模块文件 (.txv)..." Importance="high" />
+    <!-- 1. 从 exe 目录直接查找 .txv -->
+    <ItemGroup>
+      <OdaSdkTxvFiles Include="$(OdaSdkExePath)\*.txv" Condition="Exists('$(OdaSdkExePath)')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(OdaSdkTxvFiles)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxvFiles)' != ''">
+      <Output TaskParameter="CopiedFiles" ItemName="CopiedTxvFiles" />
+    </Copy>
+    <!-- 2. 从 exe 目录的父目录递归查找 .txv（覆盖 Debug/Release 两种包） -->
+    <ItemGroup>
+      <OdaSdkTxvFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\**\*.txv" Condition="'$(Configuration)'=='Debug' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe')" />
+      <OdaSdkTxvFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\**\*.txv" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(OdaSdkTxvFilesFromExeParent)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxvFilesFromExeParent)' != ''">
+      <Output TaskParameter="CopiedFiles" ItemName="CopiedTxvFiles" />
+    </Copy>
     <Message Text="已复制 DLL 文件: @(CopiedDlls)" Importance="normal" Condition="'@(CopiedDlls)' != ''" />
     <Message Text="已复制 .tx 资源文件: @(CopiedTxFiles)" Importance="normal" Condition="'@(CopiedTxFiles)' != ''" />
+    <Message Text="已复制 .txv 模块文件: @(CopiedTxvFiles)" Importance="normal" Condition="'@(CopiedTxvFiles)' != ''" />
     <Warning Text="未找到 .tx 资源文件，如果运行时出现相关错误，请检查 ODA SDK 安装或手动复制 .tx 文件到输出目录: $(TargetDir)" Condition="'@(CopiedTxFiles)' == ''" />
+    <Warning Text="未找到 .txv 模块文件，如果运行时出现 WinGDI/WinOpenGL 模块加载错误，请检查 ODA SDK 安装或手动复制 .txv 文件到输出目录: $(TargetDir)" Condition="'@(CopiedTxvFiles)' == ''" />
   </Target>
 </Project>

@@ -84,5 +84,8 @@ int main()
     std::wcout << L"按任意键退出..." << std::endl;
     _getch();
 
+    // 显式清理 ODA，避免 Debug 版本在进程退出时触发断言
+    Oda_Cleanup();
+
     return 0;
 }

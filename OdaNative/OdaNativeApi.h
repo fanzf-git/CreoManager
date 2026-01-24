@@ -42,6 +42,10 @@ extern "C" {
 
     ODA_API double Oda_GetHeight();
 
+    // ----------------- 反初始化（可选） -----------------
+    // 在进程退出前显式清理 ODA，避免 Debug 版本中的断言。
+    ODA_API void Oda_Cleanup();
+
 #ifdef __cplusplus
 }
 #endif
