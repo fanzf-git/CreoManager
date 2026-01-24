@@ -100,8 +100,7 @@ bool OdaEngine::CreateOrUpdateBox(const BoxParam& p)
 		// 添加到模型空间
 		ms->appendOdDbEntity(m_box);
 
-		// 模型更新后先缩放视图到几何范围，再统一刷新
-		ZoomToExtents();
+		// 模型更新后触发重绘
 		Redraw();
 
 		return true;
@@ -154,8 +153,7 @@ bool OdaEngine::CreateOrUpdateCylinder(const CylinderParam& p)
 		// 添加到模型空间
 		ms->appendOdDbEntity(m_cylinder);
 
-		// 模型更新后先缩放视图到几何范围，再统一刷新
-		ZoomToExtents();
+		// 模型更新后触发重绘
 		Redraw();
 
 		return true;
@@ -208,6 +206,57 @@ double OdaEngine::GetHeight()
 	m_cylinder->getGeomExtents(ext);
 
 	return ext.maxPoint().z - ext.minPoint().z;
+}
+
+bool OdaEngine::LoadDwg(const OdString& filePath)
+{
+  if (filePath.isEmpty())
+    return false;
+
+  try
+  {
+    // 通过 DbHostServices 读取 DWG 文件
+    OdDbDatabasePtr newDb = g_dbHostServices.readFile(filePath, true, false);
+    if (newDb.isNull())
+      return false;
+
+    // 先释放旧的图形设备和 Gi 上下文，避免在同一 device 上重复 setupActiveLayoutViews
+    if (!m_device.isNull())
+      m_device.release();
+    if (!m_giCtx.isNull())
+      m_giCtx.release();
+
+    // 替换当前数据库和实体指针
+    m_db = newDb;
+    m_box.release();
+    m_cylinder.release();
+
+    // 如果已经有窗口句柄，则重新初始化图形系统以绑定新数据库
+    if (m_hwnd)
+    {
+      if (!initGraphics(m_hwnd))
+      {
+        m_device.release();
+        m_giCtx.release();
+        return false;
+      }
+    }
+
+    return true;
+  }
+  catch (const OdError& e)
+  {
+    OdString msg = OD_T("LoadDwg failed: ");
+    msg += e.description();
+    msg += OD_T("\r\n");
+    OutputDebugStringW(reinterpret_cast<LPCWSTR>(msg.c_str()));
+    return false;
+  }
+  catch (...)
+  {
+    OutputDebugStringW(L"LoadDwg failed: unknown exception\r\n");
+    return false;
+  }
 }
 
 // ============================================================================
@@ -310,10 +359,4 @@ bool OdaEngine::initGraphics(HWND hwnd)
     m_giCtx.release();
     return false;
   }
-}
-
-void OdaEngine::ZoomToExtents()
-{
-  // 简化版：当前只触发一次统一重绘，不做额外视图计算，避免 Debug 版 ODA 内部断言。
-  Redraw();
 }

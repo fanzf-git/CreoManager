@@ -47,4 +47,13 @@ namespace OdaCliWrapper
 	{
 		return Oda_GetHeight();
 	}
+
+    bool SimpleDraw::OpenDwg(String^ filePath)
+    {
+        if (String::IsNullOrEmpty(filePath))
+            return false;
+
+        pin_ptr<const wchar_t> pPath = PtrToStringChars(filePath);
+        return Oda_LoadDwg(pPath);
+    }
 }

@@ -125,7 +125,8 @@
     <OdaCliWrapperDllPath>$(SolutionDir)x64\Debug\OdaCliWrapper.dll</OdaCliWrapperDllPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OdaSdkExePath>$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\vc17_amd64dll</OdaSdkExePath>
+    <!-- Release 模式使用与 Debug 相同的 NuGet 包，只是子目录不同 -->
+    <OdaSdkExePath>$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\vc17_amd64dll</OdaSdkExePath>
     <OdaNativeDllPath>$(SolutionDir)x64\Release\OdaNative.dll</OdaNativeDllPath>
     <OdaCliWrapperDllPath>$(SolutionDir)x64\Release\OdaCliWrapper.dll</OdaCliWrapperDllPath>
   </PropertyGroup>
@@ -162,7 +163,7 @@
     <!-- 2. 从整个 ODA SDK 包中递归查找 -->
     <ItemGroup>
       <OdaSdkTxFilesAll Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\**\*.tx" Condition="'$(Configuration)'=='Debug' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12')" />
-      <OdaSdkTxFilesAll Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\**\*.tx" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release')" />
+      <OdaSdkTxFilesAll Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\**\*.tx" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12')" />
     </ItemGroup>
     <Copy SourceFiles="@(OdaSdkTxFilesAll)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxFilesAll)' != ''">
       <Output TaskParameter="CopiedFiles" ItemName="CopiedTxFiles" />
@@ -177,7 +178,7 @@
     <!-- 4. 从 exe 目录的父目录递归查找 -->
     <ItemGroup>
       <OdaSdkTxFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\**\*.tx" Condition="'$(Configuration)'=='Debug' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe')" />
-      <OdaSdkTxFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\**\*.tx" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe')" />
+      <OdaSdkTxFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\**\*.tx" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe')" />
     </ItemGroup>
     <Copy SourceFiles="@(OdaSdkTxFilesFromExeParent)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxFilesFromExeParent)' != ''">
       <Output TaskParameter="CopiedFiles" ItemName="CopiedTxFiles" />
@@ -194,7 +195,7 @@
     <!-- 2. 从 exe 目录的父目录递归查找 .txv（覆盖 Debug/Release 两种包） -->
     <ItemGroup>
       <OdaSdkTxvFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\**\*.txv" Condition="'$(Configuration)'=='Debug' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe')" />
-      <OdaSdkTxvFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\**\*.txv" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe')" />
+      <OdaSdkTxvFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\**\*.txv" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe')" />
     </ItemGroup>
     <Copy SourceFiles="@(OdaSdkTxvFilesFromExeParent)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxvFilesFromExeParent)' != ''">
       <Output TaskParameter="CopiedFiles" ItemName="CopiedTxvFiles" />

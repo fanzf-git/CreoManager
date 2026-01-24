@@ -46,6 +46,10 @@ extern "C" {
     // 在进程退出前显式清理 ODA，避免 Debug 版本中的断言。
     ODA_API void Oda_Cleanup();
 
+    // ----------------- 打开 DWG 文件 -----------------
+    // filePath: Unicode 路径（const wchar_t*）
+    ODA_API bool Oda_LoadDwg(const wchar_t* filePath);
+
 #ifdef __cplusplus
 }
 #endif

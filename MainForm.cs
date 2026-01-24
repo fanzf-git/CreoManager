@@ -109,5 +109,22 @@ namespace BIMViewDemo
         {
             CreateCylinder();
         }
+
+        private void btnOpenDwg_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new OpenFileDialog())
+            {
+                dlg.Filter = "DWG 文件|*.dwg|所有文件|*.*";
+                dlg.Title = "打开 DWG 图纸";
+                if (dlg.ShowDialog(this) == DialogResult.OK)
+                {
+                    bool ok = OdaCliWrapper.SimpleDraw.OpenDwg(dlg.FileName);
+                    if (!ok)
+                    {
+                        MessageBox.Show("打开 DWG 失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
     }
 }

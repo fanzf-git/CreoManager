@@ -50,4 +50,13 @@ extern "C"
     // 显式清理 ODA，配合 OdaInitializerImpl::Cleanup/odUninitialize/odCleanUpStaticData
     OdaInitializer::Cleanup();
   }
+
+  bool Oda_LoadDwg(const wchar_t* filePath)
+  {
+    if (!filePath)
+      return false;
+
+    auto& engine = OdaEngine::Instance();
+    return engine.LoadDwg(OdString(filePath));
+  }
 }

@@ -29,6 +29,7 @@ namespace BIMViewDemo
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnOpenDwg = new System.Windows.Forms.Button();
             this.labelLength = new System.Windows.Forms.Label();
             this.labelWidth = new System.Windows.Forms.Label();
             this.labelHeight = new System.Windows.Forms.Label();
@@ -55,6 +56,7 @@ namespace BIMViewDemo
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel1.Controls.Add(this.btnOpenDwg, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.labelLength, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.labelWidth, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.labelHeight, 0, 2);
@@ -72,7 +74,7 @@ namespace BIMViewDemo
             this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel1.RowCount = 9;
+            this.tableLayoutPanel1.RowCount = 10;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -81,9 +83,22 @@ namespace BIMViewDemo
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 706);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // btnOpenDwg
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.btnOpenDwg, 2);
+            this.btnOpenDwg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOpenDwg.Location = new System.Drawing.Point(8, 248);
+            this.btnOpenDwg.Name = "btnOpenDwg";
+            this.btnOpenDwg.Size = new System.Drawing.Size(278, 24);
+            this.btnOpenDwg.TabIndex = 2;
+            this.btnOpenDwg.Text = "打开 DWG";
+            this.btnOpenDwg.UseVisualStyleBackColor = true;
+            this.btnOpenDwg.Click += new System.EventHandler(this.btnOpenDwg_Click);
             // 
             // labelLength
             // 
@@ -301,5 +316,6 @@ namespace BIMViewDemo
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel viewPanel;
         private BimViewEditor bimViewEditor;
+        private System.Windows.Forms.Button btnOpenDwg;
     }
 }

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 using namespace System;
 
@@ -31,5 +31,10 @@ namespace OdaCliWrapper {
 		/// 获取当前圆柱高度
 		/// </summary>
 		static double GetHeight();
+
+        /// <summary>
+        /// 打开 DWG 文件并显示到当前视图
+        /// </summary>
+        static bool OpenDwg(String^ filePath);
 	};
 }

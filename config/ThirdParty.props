@@ -1,6 +1,11 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Label="UserMacros">
+  <!-- Debug 使用 ODA 调试库 (…\lib\vc17_amd64dlldsg)，Release 使用正式库 (…\lib\vc17_amd64dll) -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="UserMacros">
     <UserOdaLib>$(SolutionDir)\packages\Kernel_vc17_amd64dll_26.12\lib\vc17_amd64dlldbg</UserOdaLib>
+    <UserOdaInc>$(SolutionDir)\packages\Kernel_vc17_amd64dll_26.12\</UserOdaInc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="UserMacros">
+    <UserOdaLib>$(SolutionDir)\packages\Kernel_vc17_amd64dll_26.12\lib\vc17_amd64dll</UserOdaLib>
     <UserOdaInc>$(SolutionDir)\packages\Kernel_vc17_amd64dll_26.12\</UserOdaInc>
   </PropertyGroup>
   <Import Project="$(MSBuildThisFileDirectory)OdaImport.props" />

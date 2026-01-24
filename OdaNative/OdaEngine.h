@@ -64,8 +64,8 @@ public:
     
     // 触发重绘
     void Redraw();
-    // 缩放到当前模型范围
-    void ZoomToExtents();
+    // 从 DWG 文件加载数据库并显示
+    bool LoadDwg(const OdString& filePath);
     
     // 获取当前圆柱体的高度
     double GetHeight();
