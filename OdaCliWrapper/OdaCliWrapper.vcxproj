@@ -25,6 +25,9 @@
     <RootNamespace>OdaCliWrapper</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+	<!-- 关键：禁止 NuGet Restore 处理 C++/CLI -->
+  <RestoreProjectStyle>None</RestoreProjectStyle>
+
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
