@@ -44,11 +44,9 @@ namespace BIMViewDemo
             this.textCylinderHeight = new System.Windows.Forms.TextBox();
             this.btnCreateCylinder = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.viewPanel = new System.Windows.Forms.Panel();
             this.bimViewEditor = new BIMViewDemo.BimViewEditor();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.viewPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -85,7 +83,7 @@ namespace BIMViewDemo
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 706);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 724);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // btnOpenDwg
@@ -254,37 +252,28 @@ namespace BIMViewDemo
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.viewPanel, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.bimViewEditor, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1055, 714);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1192, 732);
             this.tableLayoutPanel2.TabIndex = 1;
-            // 
-            // viewPanel
-            // 
-            this.viewPanel.Controls.Add(this.bimViewEditor);
-            this.viewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.viewPanel.Location = new System.Drawing.Point(305, 4);
-            this.viewPanel.Name = "viewPanel";
-            this.viewPanel.Size = new System.Drawing.Size(749, 706);
-            this.viewPanel.TabIndex = 1;
             // 
             // bimViewEditor
             // 
             this.bimViewEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bimViewEditor.Location = new System.Drawing.Point(0, 0);
+            this.bimViewEditor.Location = new System.Drawing.Point(305, 4);
             this.bimViewEditor.Name = "bimViewEditor";
-            this.bimViewEditor.Size = new System.Drawing.Size(749, 706);
-            this.bimViewEditor.TabIndex = 0;
+            this.bimViewEditor.Size = new System.Drawing.Size(883, 724);
+            this.bimViewEditor.TabIndex = 1;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1055, 714);
+            this.ClientSize = new System.Drawing.Size(1192, 732);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "MainForm";
             this.Text = "参数建模示例";
@@ -292,7 +281,6 @@ namespace BIMViewDemo
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.viewPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -314,8 +302,7 @@ namespace BIMViewDemo
         private System.Windows.Forms.TextBox textCylinderHeight;
         private System.Windows.Forms.Button btnCreateCylinder;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Panel viewPanel;
-        private BimViewEditor bimViewEditor;
         private System.Windows.Forms.Button btnOpenDwg;
+        private BimViewEditor bimViewEditor;
     }
 }

@@ -32,6 +32,11 @@ namespace OdaCliWrapper {
 		/// </summary>
 		static double GetHeight();
 
+      /// <summary>
+      /// 请求 ODA 重新绘制当前视图（在控件 Paint / Resize 时调用）
+      /// </summary>
+      static void Redraw();
+
         /// <summary>
         /// 打开 DWG 文件并显示到当前视图
         /// </summary>

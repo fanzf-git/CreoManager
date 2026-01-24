@@ -48,6 +48,10 @@ namespace OdaCliWrapper
 		return Oda_GetHeight();
 	}
 
+  void SimpleDraw::Redraw()
+  {
+    Oda_Redraw();
+  }
     bool SimpleDraw::OpenDwg(String^ filePath)
     {
         if (String::IsNullOrEmpty(filePath))

@@ -42,6 +42,10 @@ extern "C" {
 
     ODA_API double Oda_GetHeight();
 
+  // ----------------- 重绘当前视图 -----------------
+  // 在宿主窗口 WM_PAINT / Resize 等场景下调用，触发 ODA 的 m_device->update()
+  ODA_API void Oda_Redraw();
+
     // ----------------- 反初始化（可选） -----------------
     // 在进程退出前显式清理 ODA，避免 Debug 版本中的断言。
     ODA_API void Oda_Cleanup();

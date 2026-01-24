@@ -45,6 +45,12 @@ extern "C"
 		return engine.GetHeight();
 	}
 
+  void Oda_Redraw()
+  {
+    auto& engine = OdaEngine::Instance();
+    engine.Redraw();
+  }
+
   void Oda_Cleanup()
   {
     // 显式清理 ODA，配合 OdaInitializerImpl::Cleanup/odUninitialize/odCleanUpStaticData

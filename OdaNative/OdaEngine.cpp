@@ -68,6 +68,7 @@ bool OdaEngine::Initialize(HWND hwnd)
 	}
 
 	m_initialized = true;
+	m_hasContent = false;
 	return true;
 }
 
@@ -99,6 +100,33 @@ bool OdaEngine::CreateOrUpdateBox(const BoxParam& p)
 
 		// 添加到模型空间
 		ms->appendOdDbEntity(m_box);
+
+		// 标记为已有内容
+		m_hasContent = true;
+
+		// 模型更新后尝试自动缩放到图形范围（避免看不到新建的 Box）
+		try
+		{
+			if (!m_device.isNull() && m_device->numViews() > 0)
+			{
+				OdGsViewPtr pView = m_device->viewAt(0);
+				if (!pView.isNull())
+				{
+					OdAbstractViewPEPtr pViewPE(pView);
+					if (!pViewPE.isNull())
+					{
+						pViewPE->zoomExtents(pView);
+					}
+				}
+			}
+		}
+		catch (const OdError& e)
+		{
+			OdString msg = OD_T("CreateOrUpdateBox: zoomExtents failed: ");
+			msg += e.description();
+			msg += OD_T("\r\n");
+			OutputDebugStringW(reinterpret_cast<LPCWSTR>(msg.c_str()));
+		}
 
 		// 模型更新后触发重绘
 		Redraw();
@@ -136,7 +164,7 @@ bool OdaEngine::CreateOrUpdateCylinder(const CylinderParam& p)
 		}
 
 		// 创建新的圆柱体
-		// 或者使用扩展的 3D Solid 类（如 OcDb3dSolid）
+			// 或者使用扩展的 3D Solid 类（如 OcDb3dSolid）
 		m_cylinder = OdDb3dSolid::createObject();
 
 		// 这里创建一个正方形截面的柱体来近似圆柱体
@@ -152,6 +180,33 @@ bool OdaEngine::CreateOrUpdateCylinder(const CylinderParam& p)
 
 		// 添加到模型空间
 		ms->appendOdDbEntity(m_cylinder);
+
+		// 标记为已有内容
+		m_hasContent = true;
+
+		// 模型更新后尝试自动缩放到图形范围（避免看不到新建的 Cylinder）
+		try
+		{
+			if (!m_device.isNull() && m_device->numViews() > 0)
+			{
+				OdGsViewPtr pView = m_device->viewAt(0);
+				if (!pView.isNull())
+				{
+					OdAbstractViewPEPtr pViewPE(pView);
+					if (!pViewPE.isNull())
+					{
+						pViewPE->zoomExtents(pView);
+					}
+				}
+			}
+		}
+		catch (const OdError& e)
+		{
+			OdString msg = OD_T("CreateOrUpdateCylinder: zoomExtents failed: ");
+			msg += e.description();
+			msg += OD_T("\r\n");
+			OutputDebugStringW(reinterpret_cast<LPCWSTR>(msg.c_str()));
+		}
 
 		// 模型更新后触发重绘
 		Redraw();
@@ -175,6 +230,10 @@ bool OdaEngine::CreateOrUpdateCylinder(const CylinderParam& p)
 
 void OdaEngine::Redraw()
 {
+	// 如果还没有任何几何/数据库内容，则无需强制刷新（避免在某些 Debug 配置下触发 ODA 内部断言）
+	if (!m_hasContent)
+		return;
+
 	// 如果图形设备已初始化，直接刷新一次
 	if (!m_device.isNull())
 	{
@@ -210,53 +269,56 @@ double OdaEngine::GetHeight()
 
 bool OdaEngine::LoadDwg(const OdString& filePath)
 {
-  if (filePath.isEmpty())
-    return false;
+	if (filePath.isEmpty())
+		return false;
 
-  try
-  {
-    // 通过 DbHostServices 读取 DWG 文件
-    OdDbDatabasePtr newDb = g_dbHostServices.readFile(filePath, true, false);
-    if (newDb.isNull())
-      return false;
+	try
+	{
+		// 通过 DbHostServices 读取 DWG 文件
+		OdDbDatabasePtr newDb = g_dbHostServices.readFile(filePath, true, false);
+		if (newDb.isNull())
+			return false;
 
-    // 先释放旧的图形设备和 Gi 上下文，避免在同一 device 上重复 setupActiveLayoutViews
-    if (!m_device.isNull())
-      m_device.release();
-    if (!m_giCtx.isNull())
-      m_giCtx.release();
+		// 先释放旧的图形设备和 Gi 上下文，避免在同一 device 上重复 setupActiveLayoutViews
+		if (!m_device.isNull())
+			m_device.release();
+		if (!m_giCtx.isNull())
+			m_giCtx.release();
 
-    // 替换当前数据库和实体指针
-    m_db = newDb;
-    m_box.release();
-    m_cylinder.release();
+		// 替换当前数据库和实体指针
+		m_db = newDb;
+		m_box.release();
+		m_cylinder.release();
 
-    // 如果已经有窗口句柄，则重新初始化图形系统以绑定新数据库
-    if (m_hwnd)
-    {
-      if (!initGraphics(m_hwnd))
-      {
-        m_device.release();
-        m_giCtx.release();
-        return false;
-      }
-    }
+		// 标记为已有内容
+		m_hasContent = true;
 
-    return true;
-  }
-  catch (const OdError& e)
-  {
-    OdString msg = OD_T("LoadDwg failed: ");
-    msg += e.description();
-    msg += OD_T("\r\n");
-    OutputDebugStringW(reinterpret_cast<LPCWSTR>(msg.c_str()));
-    return false;
-  }
-  catch (...)
-  {
-    OutputDebugStringW(L"LoadDwg failed: unknown exception\r\n");
-    return false;
-  }
+		// 如果已经有窗口句柄，则重新初始化图形系统以绑定新数据库
+		if (m_hwnd)
+		{
+			if (!initGraphics(m_hwnd))
+			{
+				m_device.release();
+				m_giCtx.release();
+				return false;
+			}
+		}
+
+		return true;
+	}
+	catch (const OdError& e)
+	{
+		OdString msg = OD_T("LoadDwg failed: ");
+		msg += e.description();
+		msg += OD_T("\r\n");
+		OutputDebugStringW(reinterpret_cast<LPCWSTR>(msg.c_str()));
+		return false;
+	}
+	catch (...)
+	{
+		OutputDebugStringW(L"LoadDwg failed: unknown exception\r\n");
+		return false;
+	}
 }
 
 // ============================================================================
@@ -264,99 +326,89 @@ bool OdaEngine::LoadDwg(const OdString& filePath)
 // ============================================================================
 bool OdaEngine::initGraphics(HWND hwnd)
 {
-  try
-  {
-    if (m_db.isNull())
-      return false;
+	try
+	{
+		if (m_db.isNull())
+			return false;
 
-    // 创建 Gi 上下文
-    m_giCtx = OdGiContextForDbDatabase::createObject();
-    m_giCtx->setDatabase(m_db);
+		// 创建 Gi 上下文
+		m_giCtx = OdGiContextForDbDatabase::createObject();
+		m_giCtx->setDatabase(m_db);
 
-    // 使用模块名宏
-    MODULE_NAMES_DEFINED
+		// 使用模块名宏
+		MODULE_NAMES_DEFINED
 
-    // 优先尝试 OpenGL -> GDI（这是之前验证过可行的组合）
-    OdGsModulePtr pGsModule = ::odrxDynamicLinker()->loadModule(OdWinOpenGLModuleName);
-    if (pGsModule.isNull())
-      pGsModule = ::odrxDynamicLinker()->loadModule(OdWinGDIModuleName);
-    if (pGsModule.isNull())
-    {
-      OutputDebugStringW(L"initGraphics: failed to load Gs module (OpenGL/GDI)\r\n");
-      return false;
-    }
+			// 优先尝试 OpenGL -> GDI（Release 使用 OpenGL，Debug 直接使用 GDI，避免调试版 OpenGL 模块内部断言/崩溃）
+#if defined(_DEBUG)
+			OdGsModulePtr pGsModule = ::odrxDynamicLinker()->loadModule(OdWinGDIModuleName);
+#else
+			OdGsModulePtr pGsModule = ::odrxDynamicLinker()->loadModule(OdWinOpenGLModuleName);
+		if (pGsModule.isNull())
+			pGsModule = ::odrxDynamicLinker()->loadModule(OdWinGDIModuleName);
+#endif
+		if (pGsModule.isNull())
+		{
+			OutputDebugStringW(L"initGraphics: failed to load Gs module (OpenGL/GDI)\r\n");
+			return false;
+		}
 
-    // 创建 Device
-    m_device = pGsModule->createDevice();
-    if (m_device.isNull())
-    {
-      OutputDebugStringW(L"initGraphics: createDevice() returned null\r\n");
-      return false;
-    }
+		// 创建 Device
+		m_device = pGsModule->createDevice();
+		if (m_device.isNull())
+		{
+			OutputDebugStringW(L"initGraphics: createDevice() returned null\r\n");
+			return false;
+		}
 
-    // 绑定窗口句柄，并设置常用属性
-    OdRxDictionaryPtr pProps = m_device->properties();
-    if (!pProps.isNull())
-    {
-      pProps->putAt(OD_T("WindowHWND"), OdRxVariantValue((OdIntPtr)hwnd));
+		// 绑定窗口句柄，并设置常用属性
+		OdRxDictionaryPtr pProps = m_device->properties();
+		if (!pProps.isNull())
+		{
+			pProps->putAt(OD_T("WindowHWND"), OdRxVariantValue((OdIntPtr)hwnd));
 
-      if (pProps->has(OD_T("DoubleBufferEnabled")))
-        pProps->putAt(OD_T("DoubleBufferEnabled"), OdRxVariantValue(true));
-      if (pProps->has(OD_T("EnableSoftwareHLR")))
-        pProps->putAt(OD_T("EnableSoftwareHLR"), OdRxVariantValue(true));
-      if (pProps->has(OD_T("DiscardBackFaces")))
-        pProps->putAt(OD_T("DiscardBackFaces"), OdRxVariantValue(true));
-    }
+			if (pProps->has(OD_T("DoubleBufferEnabled")))
+				pProps->putAt(OD_T("DoubleBufferEnabled"), OdRxVariantValue(true));
+			if (pProps->has(OD_T("EnableSoftwareHLR")))
+				pProps->putAt(OD_T("EnableSoftwareHLR"), OdRxVariantValue(true));
+			if (pProps->has(OD_T("DiscardBackFaces")))
+				pProps->putAt(OD_T("DiscardBackFaces"), OdRxVariantValue(true));
+		}
 
-    // 将数据库关联到当前布局，并创建视图（增加异常信息输出，便于调试）
-    try
-    {
-      m_device = OdDbGsManager::setupActiveLayoutViews(m_device, m_giCtx);
-    }
-    catch (const OdError& e)
-    {
-      OdString msg = OD_T("setupActiveLayoutViews failed: ");
-      msg += e.description();
-      msg += OD_T("\r\n");
-      OutputDebugStringW(reinterpret_cast<LPCWSTR>(msg.c_str()));
-      throw;
-    }
+		// 将数据库关联到当前布局，并创建视图（增加异常信息输出，便于调试）
+		try
+		{
+			m_device = OdDbGsManager::setupActiveLayoutViews(m_device, m_giCtx);
+		}
+		catch (const OdError& e)
+		{
+			OdString msg = OD_T("setupActiveLayoutViews failed: ");
+			msg += e.description();
+			msg += OD_T("\r\n");
+			OutputDebugStringW(reinterpret_cast<LPCWSTR>(msg.c_str()));
+			throw;
+		}
 
-    // 根据窗口客户区尺寸设置 Device 大小
-    if (hwnd)
-    {
-      RECT rc{};
-      if (::GetClientRect(hwnd, &rc))
-      {
-        if (rc.right > rc.left && rc.bottom > rc.top)
-        {
-          // OdGsDCRect(左, 右, 下, 上)
-          OdGsDCRect gsRect(rc.left, rc.right, rc.bottom, rc.top);
-          m_device->onSize(gsRect);
-        }
-      }
-    }
+		// 根据窗口客户区尺寸设置 Device 大小
+		if (hwnd)
+		{
+			RECT rc{};
+			if (::GetClientRect(hwnd, &rc))
+			{
+				if (rc.right > rc.left && rc.bottom > rc.top)
+				{
+					// OdGsDCRect(左, 右, 下, 上)
+					OdGsDCRect gsRect(rc.left, rc.right, rc.bottom, rc.top);
+					m_device->onSize(gsRect);
+				}
+			}
+		}
 
-    // 初始一次更新（同样保护一下，方便看到具体异常）
-    try
-    {
-      m_device->update();
-    }
-    catch (const OdError& e)
-    {
-      OdString msg = OD_T("initGraphics: m_device->update() failed: ");
-      msg += e.description();
-      msg += OD_T("\r\n");
-      OutputDebugStringW(reinterpret_cast<LPCWSTR>(msg.c_str()));
-      throw;
-    }
-
-    return true;
-  }
-  catch (...)
-  {
-    m_device.release();
-    m_giCtx.release();
-    return false;
-  }
+		return true;
+	}
+	catch (...)
+	{
+		m_device.release();
+		m_giCtx.release();
+		return false;
+	}
 }

@@ -86,6 +86,7 @@ private:
 private:
     HWND  m_hwnd        = nullptr;
     bool  m_initialized = false;
+  bool  m_hasContent  = false; // 是否已经有几何或 DWG，可用于控制首次 Redraw
 
     // 数据库与实体
     OdDbDatabasePtr m_db;
