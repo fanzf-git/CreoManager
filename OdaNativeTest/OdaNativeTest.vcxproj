@@ -124,73 +124,16 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <UserOdaDll>$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\vc17_amd64dlldbg\</UserOdaDll>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <UserOdaDll>$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\vc17_amd64dll\</UserOdaDll>
+  </PropertyGroup>
   <Target Name="CopyOdaDlls" AfterTargets="Build">
-    <Message Text="开始复制 ODA DLL 和资源文件..." Importance="high" />
-    <!-- 复制 OdaNative.dll -->
-    <Copy SourceFiles="$(SolutionDir)x64\$(Configuration)\OdaNative.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="Exists('$(SolutionDir)x64\$(Configuration)\OdaNative.dll')">
-      <Output TaskParameter="CopiedFiles" ItemName="CopiedDlls" />
-    </Copy>
-    <!-- 复制 ODA SDK 运行时 DLL -->
-    <ItemGroup>
-      <OdaSdkDlls Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\vc17_amd64dlldbg\*.dll" Condition="'$(Configuration)'=='Debug'" />
-      <OdaSdkDlls Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\vc17_amd64dll\*.dll" Condition="'$(Configuration)'=='Release'" />
-    </ItemGroup>
-    <Copy SourceFiles="@(OdaSdkDlls)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true">
-      <Output TaskParameter="CopiedFiles" ItemName="CopiedDlls" />
-    </Copy>
-    <!-- 复制 ODA SDK 文本资源文件 (.tx) - 从 exe 目录 -->
-    <ItemGroup>
-      <OdaSdkTxFiles Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\vc17_amd64dlldbg\*.tx" Condition="'$(Configuration)'=='Debug'" />
-      <OdaSdkTxFiles Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\vc17_amd64dll\*.tx" Condition="'$(Configuration)'=='Release'" />
-    </ItemGroup>
-    <Copy SourceFiles="@(OdaSdkTxFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxFiles)' != ''">
-      <Output TaskParameter="CopiedFiles" ItemName="CopiedTxFiles" />
-    </Copy>
-    <!-- 尝试从整个 ODA SDK 包中查找并复制所有 .tx 文件 -->
-    <ItemGroup>
-      <OdaSdkTxFilesAll Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\**\*.tx" Condition="'$(Configuration)'=='Debug' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12')" />
-      <OdaSdkTxFilesAll Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\**\*.tx" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release')" />
-    </ItemGroup>
-    <Copy SourceFiles="@(OdaSdkTxFilesAll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxFilesAll)' != ''">
-      <Output TaskParameter="CopiedFiles" ItemName="CopiedTxFiles" />
-    </Copy>
-    <!-- 尝试从 SDK_26.12 目录中查找并复制 .tx 文件（如果存在） -->
-    <ItemGroup>
-      <OdaSdkTxFilesFromSdk Include="E:\Code\cli\SDK_26.12\**\*.tx" Condition="Exists('E:\Code\cli\SDK_26.12')" />
-    </ItemGroup>
-    <Copy SourceFiles="@(OdaSdkTxFilesFromSdk)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxFilesFromSdk)' != ''">
-      <Output TaskParameter="CopiedFiles" ItemName="CopiedTxFiles" />
-    </Copy>
-    <!-- 如果仍然找不到，尝试从 ODA SDK 的 exe 目录的父目录查找 -->
-    <ItemGroup>
-      <OdaSdkTxFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\**\*.tx" Condition="'$(Configuration)'=='Debug' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe')" />
-      <OdaSdkTxFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\**\*.tx" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe')" />
-    </ItemGroup>
-    <Copy SourceFiles="@(OdaSdkTxFilesFromExeParent)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxFilesFromExeParent)' != ''">
-      <Output TaskParameter="CopiedFiles" ItemName="CopiedTxFiles" />
-    </Copy>
-    <!-- 复制 ODA SDK 向量器模块文件 (.txv) -->
-    <Message Text="开始复制 ODA SDK 向量器模块文件 (.txv)..." Importance="high" />
-    <!-- 1. 从 exe 目录直接查找 .txv -->
-    <ItemGroup>
-      <OdaSdkTxvFiles Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\vc17_amd64dlldbg\*.txv" Condition="'$(Configuration)'=='Debug'" />
-      <OdaSdkTxvFiles Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\vc17_amd64dll\*.txv" Condition="'$(Configuration)'=='Release'" />
-    </ItemGroup>
-    <Copy SourceFiles="@(OdaSdkTxvFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxvFiles)' != ''">
-      <Output TaskParameter="CopiedFiles" ItemName="CopiedTxvFiles" />
-    </Copy>
-    <!-- 2. 从 exe 目录的父目录递归查找 .txv -->
-    <ItemGroup>
-      <OdaSdkTxvFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe\**\*.txv" Condition="'$(Configuration)'=='Debug' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12\exe')" />
-      <OdaSdkTxvFilesFromExeParent Include="$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe\**\*.txv" Condition="'$(Configuration)'=='Release' and Exists('$(SolutionDir)packages\Kernel_vc17_amd64dll_26.12_Release\exe')" />
-    </ItemGroup>
-    <Copy SourceFiles="@(OdaSdkTxvFilesFromExeParent)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'@(OdaSdkTxvFilesFromExeParent)' != ''">
-      <Output TaskParameter="CopiedFiles" ItemName="CopiedTxvFiles" />
-    </Copy>
-    <Message Text="已复制 DLL 文件: @(CopiedDlls)" Importance="normal" Condition="'@(CopiedDlls)' != ''" />
-    <Message Text="已复制 .tx 资源文件: @(CopiedTxFiles)" Importance="normal" Condition="'@(CopiedTxFiles)' != ''" />
-    <Message Text="已复制 .txv 模块文件: @(CopiedTxvFiles)" Importance="normal" Condition="'@(CopiedTxvFiles)' != ''" />
-    <Warning Text="未找到 .tx 资源文件，如果运行时出现相关错误，请检查 ODA SDK 安装" Condition="'@(CopiedTxFiles)' == ''" />
-    <Warning Text="未找到 .txv 模块文件，如果运行时出现 WinOpenGL/WinGDI 模块加载错误，请检查 ODA SDK 安装或手动复制 .txv 文件到输出目录: $(OutDir)" Condition="'@(CopiedTxvFiles)' == ''" />
+    <Copy SourceFiles="$(SolutionDir)x64\$(Configuration)\OdaNative.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="Exists('$(SolutionDir)x64\$(Configuration)\OdaNative.dll')" />
+    <Exec Command="xcopy /Y /I &quot;$(UserOdaDll)*.dll&quot; &quot;$(OutDir)&quot;" Condition="Exists('$(UserOdaDll)')" />
+    <Exec Command="xcopy /Y /I &quot;$(UserOdaDll)*.tx&quot; &quot;$(OutDir)&quot;" Condition="Exists('$(UserOdaDll)')" />
+    <Exec Command="xcopy /Y /I &quot;$(UserOdaDll)*.txv&quot; &quot;$(OutDir)&quot;" Condition="Exists('$(UserOdaDll)')" />
   </Target>
 </Project>
