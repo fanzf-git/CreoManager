@@ -162,6 +162,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="OdaDbHostServices.h" />
     <ClInclude Include="OdaEngine.h" />
     <ClInclude Include="OdaInitilize.h" />
     <ClInclude Include="OdaNativeApi.h" />

@@ -39,7 +39,7 @@ public:
   // 公司名称
   const OdString companyName() const
   {
-    return OD_T("MC-Tech");
+    return OD_T("Tech");
   }
 
   // === 路径 / 资源相关 ===

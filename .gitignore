@@ -74,3 +74,9 @@ packages/
 *~
 .DS_Store
 Thumbs.db
+
+# Node.js
+node_modules/
+
+# Claude 相关文件
+.claude/
